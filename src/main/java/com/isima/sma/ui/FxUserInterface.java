@@ -63,6 +63,9 @@ public class FxUserInterface extends Application {
         titleLabel.setPadding(new Insets(5)); //top, right, bottom, left
         controlPanel.getChildren().add(titleLabel);
 
+        Label zonesLabel = new Label("Zones");
+        zonesLabel.setPadding(new Insets(0, 0, 0, 5));
+        controlPanel.getChildren().add(zonesLabel);
         HBox zoneButtonsBox = new HBox();
         zoneButtonsBox.setSpacing(5.);
 
@@ -143,9 +146,7 @@ public class FxUserInterface extends Application {
             y = 0;
             for(int j = 0; j < city.getWidth(); ++j) {
                 Paint squarePaint = Color.BLACK; // By default
-                if (city.isRoad(i, j)) {
-                    squarePaint = city.getEntityAt(i, j).fxRepresentation();
-                } else if (city.getEntityAt(i, j) != null) {
+                if (city.getEntityAt(i, j) != null) {
                     squarePaint = city.getEntityAt(i, j).fxRepresentation();
                 }
                 gc.setFill(squarePaint);
