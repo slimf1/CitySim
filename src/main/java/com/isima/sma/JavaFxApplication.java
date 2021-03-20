@@ -1,6 +1,6 @@
 package com.isima.sma;
 
-import com.isima.sma.gui.FxUserInterface;
+import com.isima.sma.ui.FxUserInterface;
 import com.isima.sma.utils.MTRandom;
 import javafx.application.Application;
 
