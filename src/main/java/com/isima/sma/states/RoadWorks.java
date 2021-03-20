@@ -4,8 +4,8 @@ import com.isima.sma.entities.Road;
 
 public class RoadWorks implements RoadState {
 
-    private static int DEFAULT_DURATION = 10;
-    private static int FACTOR = 2;
+    private static final int DEFAULT_DURATION = 10;
+    private static final int FACTOR = 2;
 
     private int duration;
 

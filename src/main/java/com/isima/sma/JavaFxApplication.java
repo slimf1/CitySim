@@ -6,7 +6,7 @@ import javafx.application.Application;
 
 public class JavaFxApplication {
     public static void main(String[] args) {
-        Application.launch(FxUserInterface.class, args);
         MTRandom.getInstance().setSeed(1);
+        Application.launch(FxUserInterface.class, args);
     }
 }

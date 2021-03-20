@@ -4,8 +4,8 @@ import com.isima.sma.entities.Road;
 
 public class CarAccident implements RoadState {
 
-    private static int DEFAULT_DURATION = 3;
-    private static int COST_DIFFERENCE = 500;
+    private static final int DEFAULT_DURATION = 3;
+    private static final int COST_DIFFERENCE = 100;
 
     private int duration;
 
