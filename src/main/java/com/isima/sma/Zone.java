@@ -22,6 +22,7 @@ public class Zone extends Entity {
 
     @Override
     public String toString() {
-        return zoneType.toString();
+        String zoneTypeName = zoneType.toString();
+        return zoneTypeName.charAt(0) + zoneTypeName.substring(1).toLowerCase();
     }
 }
