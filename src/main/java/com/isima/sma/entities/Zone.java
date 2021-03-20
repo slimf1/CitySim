@@ -20,6 +20,11 @@ public class Zone extends Entity {
     }
 
     @Override
+    public String conRepresentation() {
+        return Character.valueOf(zoneType.toString().charAt(0)).toString();
+    }
+
+    @Override
     public String toString() {
         String zoneTypeName = zoneType.toString();
         return zoneTypeName.charAt(0) + zoneTypeName.substring(1).toLowerCase();

@@ -103,4 +103,8 @@ public class City {
 
         return adjacentRoads;
     }
+
+    public void step() {
+
+    }
 }
