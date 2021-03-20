@@ -11,7 +11,6 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class Road extends Entity implements Iterable<Vehicle>, Comparable<Road> {
-    // State pour cost
 
     private static final int MAX_COST = 10;
     public static final RoadState DEFAULT_STATE = new DefaultState();
@@ -19,12 +18,22 @@ public class Road extends Entity implements Iterable<Vehicle>, Comparable<Road> 
     private int usury;
     private Queue<Vehicle> vehicles;
     private RoadState state;
+    private boolean busStop;
 
     public Road() {
         super();
         this.usury = 0;
         this.vehicles = new LinkedList<>();
         this.state = DEFAULT_STATE;
+        this.busStop = false;
+    }
+
+    public final boolean isBusStop() {
+        return busStop;
+    }
+
+    public final void setBusStop(boolean busStop) {
+        this.busStop = busStop;
     }
 
     public final void setState(RoadState state) {
@@ -69,7 +78,7 @@ public class Road extends Entity implements Iterable<Vehicle>, Comparable<Road> 
 
     @Override
     public Paint fxRepresentation() {
-        Color baseColor = Color.RED;
+        Color baseColor = state.getColor();
         int clampedCost = Math.max(0, Math.min(MAX_COST, cost()));
         for(int i = 0; i < clampedCost; ++i)
             baseColor = baseColor.darker();

@@ -2,6 +2,7 @@ package com.isima.sma.states;
 
 import com.isima.sma.entities.Road;
 import com.isima.sma.utils.MTRandom;
+import javafx.scene.paint.Color;
 
 public class DefaultState implements RoadState {
 
@@ -27,5 +28,10 @@ public class DefaultState implements RoadState {
             return;
         }
 
+    }
+
+    @Override
+    public Color getColor() {
+        return Color.RED;
     }
 }

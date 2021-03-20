@@ -1,6 +1,7 @@
 package com.isima.sma.states;
 
 import com.isima.sma.entities.Road;
+import javafx.scene.paint.Color;
 
 public class RoadWorks implements RoadState {
 
@@ -28,5 +29,10 @@ public class RoadWorks implements RoadState {
             road.setUsury(0);
             road.setState(Road.DEFAULT_STATE);
         }
+    }
+
+    @Override
+    public Color getColor() {
+        return Color.ORANGE;
     }
 }
