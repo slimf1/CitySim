@@ -17,7 +17,7 @@ public class City implements Serializable {
 
     private Entity[] grid;
     private List<Road> roads;
-    private List<Zone> zones; // Map : zoneType => List ?
+    private Map<ZoneType, List<Zone>> zones; // Map : zoneType => List ?
     private int width;
     private int height;
 
@@ -28,7 +28,7 @@ public class City implements Serializable {
     public City(int width, int height) {
         this.grid = new Entity[width * height];
         this.roads = new ArrayList<>();
-        this.zones = new ArrayList<>();
+        this.zones = new HashMap<>();
         this.width = width;
         this.height = height;
     }
@@ -63,7 +63,11 @@ public class City implements Serializable {
         if (isInsideGrid(x, y) && grid[index] == null) {
             Zone zone = new Zone(zoneType);
             grid[index] = zone;
-            zones.add(zone);
+            if (zones.containsKey(zoneType)) {
+                zones.get(zoneType).add(zone);
+            } else {
+                zones.put(zoneType, new ArrayList<>(Arrays.asList(zone)));
+            }
             return true;
         }
         return false;
@@ -104,10 +108,14 @@ public class City implements Serializable {
     }
 
     public void step() {
+        createTrips();
         moveVehicles();
     }
 
-    public void moveVehicles() {
+    private void createTrips() {
+    }
+
+    private void moveVehicles() {
         List<Pair<Vehicle, Pair<Integer, Integer>>> changes = new ArrayList<>();
 
         for(Road road : roads) {
