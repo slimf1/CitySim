@@ -1,5 +1,6 @@
-package com.isima.sma;
+package com.isima.sma.strategies;
 
+import com.isima.sma.city.City;
 import com.isima.sma.utils.Pair;
 
 import java.util.List;

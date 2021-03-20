@@ -1,6 +1,8 @@
-package com.isima.sma;
+package com.isima.sma.vehicles;
 
+import com.isima.sma.city.City;
 import com.isima.sma.strategies.BfsStrategy;
+import com.isima.sma.strategies.PathingStrategy;
 import com.isima.sma.utils.Pair;
 
 import java.util.LinkedList;

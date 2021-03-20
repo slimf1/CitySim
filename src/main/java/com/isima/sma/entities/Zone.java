@@ -1,6 +1,5 @@
-package com.isima.sma;
+package com.isima.sma.entities;
 
-import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
 public class Zone extends Entity {

@@ -1,5 +1,9 @@
-package com.isima.sma;
+package com.isima.sma.city;
 
+import com.isima.sma.entities.Entity;
+import com.isima.sma.entities.Road;
+import com.isima.sma.entities.Zone;
+import com.isima.sma.entities.ZoneType;
 import com.isima.sma.utils.Pair;
 
 import java.util.ArrayList;
@@ -14,7 +18,7 @@ public class City {
 
     private Entity[] grid;
     private List<Road> roads;
-    private List<Zone> zones;
+    private List<Zone> zones; // Map : zoneType => List ?
     private int width;
     private int height;
 

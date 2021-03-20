@@ -1,5 +1,6 @@
-package com.isima.sma;
+package com.isima.sma.entities;
 
+import com.isima.sma.vehicles.Vehicle;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 

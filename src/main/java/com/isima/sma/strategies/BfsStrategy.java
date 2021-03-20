@@ -1,8 +1,7 @@
 package com.isima.sma.strategies;
 
-import com.isima.sma.City;
-import com.isima.sma.PathingStrategy;
-import com.isima.sma.Road;
+import com.isima.sma.city.City;
+import com.isima.sma.entities.Road;
 import com.isima.sma.utils.Pair;
 
 import java.util.ArrayList;

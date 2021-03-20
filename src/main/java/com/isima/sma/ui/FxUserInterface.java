@@ -1,9 +1,10 @@
-package com.isima.sma;
+package com.isima.sma.ui;
 
+import com.isima.sma.city.City;
+import com.isima.sma.entities.Zone;
+import com.isima.sma.entities.ZoneType;
 import javafx.application.Application;
 import javafx.geometry.Insets;
-import javafx.geometry.Rectangle2D;
-import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
