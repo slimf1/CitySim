@@ -1,12 +1,13 @@
 package com.isima.sma.ui;
 
 import com.isima.sma.city.City;
+import com.isima.sma.entities.Road;
 import com.isima.sma.entities.ZoneType;
+import com.isima.sma.vehicles.Vehicle;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Locale;
 
 public class ConsoleUserInterface {
 
@@ -62,6 +63,16 @@ public class ConsoleUserInterface {
                 } else {
                     city.addZone(x, y, ZoneType.valueOf(params[3].toUpperCase()));
                 }
+                break;
+            case "addvehicle": // Used for debug
+                int yDep = Integer.parseInt(params[1]);
+                int xDep = Integer.parseInt(params[2]);
+                int yDest = Integer.parseInt(params[3]);
+                int xDest = Integer.parseInt(params[4]);
+
+                Vehicle vehicle = new Vehicle();
+                vehicle.createPath(city, xDep, yDep, xDest, yDest);
+                ((Road)city.getEntityAt(xDep, yDep)).addVehicle(vehicle);
                 break;
             case "step":
                 int steps = Integer.parseInt(params[1]);

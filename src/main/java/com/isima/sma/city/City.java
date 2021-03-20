@@ -5,11 +5,9 @@ import com.isima.sma.entities.Road;
 import com.isima.sma.entities.Zone;
 import com.isima.sma.entities.ZoneType;
 import com.isima.sma.utils.Pair;
+import com.isima.sma.vehicles.Vehicle;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class City {
 
@@ -105,6 +103,27 @@ public class City {
     }
 
     public void step() {
+        moveVehicles();
+    }
 
+    public void moveVehicles() {
+        List<Pair<Vehicle, Pair<Integer, Integer>>> changes = new ArrayList<>();
+
+        for(Road road : roads) {
+            Iterator<Vehicle> it = road.iterator();
+            while (it.hasNext()) {
+                Vehicle vehicle = it.next();
+                it.remove();
+                if (!vehicle.isAtDestination()) {
+                    changes.add(new Pair<>(vehicle, vehicle.pollNextPosition()));
+                    // handles buses
+                }
+            }
+        }
+
+        for (Pair<Vehicle, Pair<Integer, Integer>> p : changes) {
+            Pair<Integer, Integer> nextPosition = p.getSecond();
+            ((Road)grid[nextPosition.getFirst() * width + nextPosition.getSecond()]).addVehicle(p.getFirst());
+        }
     }
 }
