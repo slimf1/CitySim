@@ -7,9 +7,10 @@ import com.isima.sma.entities.ZoneType;
 import com.isima.sma.utils.Pair;
 import com.isima.sma.vehicles.Vehicle;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class City {
+public class City implements Serializable {
 
     private static final int DEFAULT_WIDTH = 5;
     private static final int DEFAULT_HEIGHT = 10;
@@ -119,6 +120,7 @@ public class City {
                     // handles buses
                 }
             }
+            road.updateState();
         }
 
         for (Pair<Vehicle, Pair<Integer, Integer>> p : changes) {

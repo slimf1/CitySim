@@ -1,5 +1,7 @@
 package com.isima.sma.entities;
 
+import com.isima.sma.states.DefaultState;
+import com.isima.sma.states.RoadState;
 import com.isima.sma.vehicles.Vehicle;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -12,14 +14,21 @@ public class Road extends Entity implements Iterable<Vehicle>, Comparable<Road> 
     // State pour cost
 
     private static final int MAX_COST = 10;
+    public static final RoadState DEFAULT_STATE = new DefaultState();
 
     private int usury;
     private Queue<Vehicle> vehicles;
+    private RoadState state;
 
     public Road() {
         super();
         this.usury = 0;
         this.vehicles = new LinkedList<>();
+        this.state = DEFAULT_STATE;
+    }
+
+    public final void setState(RoadState state) {
+        this.state = state;
     }
 
     public void addVehicle(Vehicle vehicle) {
@@ -32,13 +41,18 @@ public class Road extends Entity implements Iterable<Vehicle>, Comparable<Road> 
     }
 
     public Integer cost() {
-        Integer cost = vehicles.size();
-        // State
+        int cost = vehicles.size();
+        if (state != null)
+            cost = state.updateCost(this, cost);
         return cost;
     }
 
     public final int getUsury() {
         return usury;
+    }
+
+    public final void setUsury(int usury) {
+        this.usury = usury;
     }
 
     @Override
@@ -68,5 +82,9 @@ public class Road extends Entity implements Iterable<Vehicle>, Comparable<Road> 
     @Override
     public int compareTo(Road o) {
         return cost().compareTo(o.cost());
+    }
+
+    public void updateState() {
+        state.updateState(this);
     }
 }
