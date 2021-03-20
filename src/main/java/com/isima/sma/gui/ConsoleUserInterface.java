@@ -1,4 +1,4 @@
-package com.isima.sma.ui;
+package com.isima.sma.gui;
 
 import com.isima.sma.city.City;
 import com.isima.sma.entities.Road;

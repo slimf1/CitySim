@@ -1,6 +1,6 @@
 package com.isima.sma;
 
-import com.isima.sma.ui.ConsoleUserInterface;
+import com.isima.sma.gui.ConsoleUserInterface;
 import com.isima.sma.utils.MTRandom;
 
 public class ConsoleApplication {
