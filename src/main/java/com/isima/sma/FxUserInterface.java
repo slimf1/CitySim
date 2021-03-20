@@ -27,7 +27,7 @@ public class FxUserInterface extends Application {
     private ZoneType selectedZoneType;
 
     public FxUserInterface() {
-        this.city = new City(10, 10);
+        this.city = new City(30, 30);
         this.root = new BorderPane();
         this.cityCanvas = new Canvas(city.getWidth() * SQUARE_LENGTH, city.getHeight() * SQUARE_LENGTH);
         this.selectedZoneType = null;
@@ -63,6 +63,7 @@ public class FxUserInterface extends Application {
         controlPanel.getChildren().add(titleLabel);
 
         HBox zoneButtonsBox = new HBox();
+        zoneButtonsBox.setSpacing(5.);
 
         Button roadButton = new Button("Road");
         roadButton.setOnAction(e -> {
@@ -70,24 +71,26 @@ public class FxUserInterface extends Application {
         });
         zoneButtonsBox.getChildren().add(roadButton);
 
-        Button residentialZoneButton = new Button("Residential");
-        residentialZoneButton.setOnAction(e -> {
-            selectedZoneType = ZoneType.RESIDENTIAL;
-        });
-        zoneButtonsBox.getChildren().add(residentialZoneButton);
-
+        for(ZoneType zoneType : ZoneType.values()) {
+            Button zoneButton = new Button(new Zone(zoneType).toString());
+            zoneButton.setOnAction(e -> {
+                selectedZoneType = zoneType;
+            });
+            zoneButtonsBox.getChildren().add(zoneButton);
+        }
+        zoneButtonsBox.setPadding(new Insets(10));
         controlPanel.getChildren().add(zoneButtonsBox);
+        controlPanel.setPadding(new Insets(10));
         root.setRight(controlPanel);
 
         // + hover => info
         // Menu bar
         MenuBar menuBar = new MenuBar();
-        Menu viewMenu = new Menu("View");
-        RadioMenuItem zoneItem = new RadioMenuItem("Zones");
-        //zoneItem.setOnAction(e -> setView(View.ZONES));
-        RadioMenuItem vehiclesItem = new RadioMenuItem("Vehicles");
-        //vehiclesItem.setOnAction(e -> setView(View.VEHICLES));
-
+        Menu viewMenu = new Menu("File");
+        RadioMenuItem zoneItem = new RadioMenuItem("Opt1");
+        zoneItem.setOnAction(e -> System.out.println("temp"));
+        RadioMenuItem vehiclesItem = new RadioMenuItem("Opt2");
+        vehiclesItem.setOnAction(e -> System.out.println("temp"));
 
         ToggleGroup toggleGroup = new ToggleGroup();
         toggleGroup.getToggles().add(zoneItem);
@@ -97,7 +100,7 @@ public class FxUserInterface extends Application {
         viewMenu.getItems().add(vehiclesItem);
         menuBar.getMenus().add(viewMenu);
         HBox hbox = new HBox(menuBar);
-        //root.setTop(hbox);
+        root.setTop(hbox);
 
         primaryStage.show();
     }
