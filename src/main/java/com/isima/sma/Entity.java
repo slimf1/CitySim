@@ -11,8 +11,4 @@ public class Entity {
     public Paint fxRepresentation() {
         return Color.BLACK;
     }
-
-    public String name() {
-        return "Default Entity";
-    }
 }

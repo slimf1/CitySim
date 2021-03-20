@@ -11,6 +11,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
@@ -23,11 +24,13 @@ public class FxUserInterface extends Application {
     private City city;
     private BorderPane root;
     private Canvas cityCanvas;
+    private ZoneType selectedZoneType;
 
     public FxUserInterface() {
         this.city = new City(10, 10);
         this.root = new BorderPane();
         this.cityCanvas = new Canvas(city.getWidth() * SQUARE_LENGTH, city.getHeight() * SQUARE_LENGTH);
+        this.selectedZoneType = null;
     }
 
     @Override
@@ -52,13 +55,29 @@ public class FxUserInterface extends Application {
         root.setCenter(cityCanvas);
 
         // Group
-        Group controlGroup = new Group();
+        VBox controlPanel = new VBox();
         Label titleLabel = new Label("CitySim");
         titleLabel.setFont(new Font("Arial", 30));
         titleLabel.setTextFill(Color.web("#0076a3"));
         titleLabel.setPadding(new Insets(5)); //top, right, bottom, left
-        controlGroup.getChildren().add(titleLabel);
-        root.setRight(controlGroup);
+        controlPanel.getChildren().add(titleLabel);
+
+        HBox zoneButtonsBox = new HBox();
+
+        Button roadButton = new Button("Road");
+        roadButton.setOnAction(e -> {
+            selectedZoneType = null;
+        });
+        zoneButtonsBox.getChildren().add(roadButton);
+
+        Button residentialZoneButton = new Button("Residential");
+        residentialZoneButton.setOnAction(e -> {
+            selectedZoneType = ZoneType.RESIDENTIAL;
+        });
+        zoneButtonsBox.getChildren().add(residentialZoneButton);
+
+        controlPanel.getChildren().add(zoneButtonsBox);
+        root.setRight(controlPanel);
 
         // + hover => info
         // Menu bar
@@ -86,7 +105,19 @@ public class FxUserInterface extends Application {
     private void handleMouseClicked(MouseEvent mouseEvent) {
         int column = (int)mouseEvent.getX() / SQUARE_LENGTH;
         int row = (int)mouseEvent.getY() / SQUARE_LENGTH;
-        if (city.addRoad(column, row)) {
+        boolean redraw = false;
+
+        if (selectedZoneType == null) {
+            if (city.addRoad(column, row)) {
+                redraw = true;
+            }
+        } else {
+            if (city.addZone(column, row, selectedZoneType)) {
+                redraw = true;
+            }
+        }
+
+        if (redraw) {
             drawCity(cityCanvas.getGraphicsContext2D());
             System.out.println("DEBUG: canvas redrawn");
         }

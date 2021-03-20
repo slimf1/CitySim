@@ -14,6 +14,7 @@ public class City {
 
     private Entity[] grid;
     private List<Road> roads;
+    private List<Zone> zones;
     private int width;
     private int height;
 
@@ -24,6 +25,7 @@ public class City {
     public City(int width, int height) {
         this.grid = new Entity[width * height];
         this.roads = new ArrayList<>();
+        this.zones = new ArrayList<>();
         this.width = width;
         this.height = height;
     }
@@ -48,6 +50,17 @@ public class City {
             Road road = new Road();
             grid[index] = road;
             roads.add(road);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean addZone(int x, int y, ZoneType zoneType) {
+        int index = x * width + y;
+        if (isInsideGrid(x, y) && grid[index] == null) {
+            Zone zone = new Zone(zoneType);
+            grid[index] = zone;
+            zones.add(zone);
             return true;
         }
         return false;
