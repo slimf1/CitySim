@@ -41,10 +41,7 @@ public class Road extends Entity implements Iterable<Vehicle>, Comparable<Road> 
     }
 
     public Integer cost() {
-        int cost = vehicles.size();
-        if (state != null)
-            cost = state.updateCost(this, cost);
-        return cost;
+        return state.updateCost(this, vehicles.size());
     }
 
     public final int getUsury() {
