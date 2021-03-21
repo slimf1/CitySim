@@ -3,7 +3,6 @@ package com.isima.sma.entities;
 import com.isima.sma.states.DefaultState;
 import com.isima.sma.states.RoadState;
 import com.isima.sma.vehicles.Vehicle;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
 import java.util.Iterator;

@@ -24,7 +24,6 @@ public class DefaultState implements RoadState {
         if (MTRandom.getInstance().nextDouble()
                 < (double)road.getUsury() / MAX_USURY) {
             road.setState(new RoadWorks(road.getUsury() / 3));
-            return;
         }
     }
 

@@ -10,7 +10,6 @@ import com.isima.sma.vehicles.Vehicle;
 
 import java.io.Serializable;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class City implements Serializable {
 
@@ -68,7 +67,7 @@ public class City implements Serializable {
             if (zones.containsKey(zoneType)) {
                 zones.get(zoneType).add(zone);
             } else {
-                zones.put(zoneType, new ArrayList<>(Arrays.asList(zone)));
+                zones.put(zoneType, new ArrayList<>(Collections.singletonList(zone)));
             }
             return true;
         }

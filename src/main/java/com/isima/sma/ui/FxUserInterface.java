@@ -77,16 +77,12 @@ public class FxUserInterface extends Application {
         zoneButtonsBox.setSpacing(5.);
 
         Button roadButton = new Button("Road");
-        roadButton.setOnAction(e -> {
-            selectedZoneType = null;
-        });
+        roadButton.setOnAction(e -> selectedZoneType = null);
         zoneButtonsBox.getChildren().add(roadButton);
 
         for(ZoneType zoneType : ZoneType.values()) {
             Button zoneButton = new Button(new Zone(zoneType, 0, 0).toString());
-            zoneButton.setOnAction(e -> {
-                selectedZoneType = zoneType;
-            });
+            zoneButton.setOnAction(e -> selectedZoneType = zoneType);
             zoneButtonsBox.getChildren().add(zoneButton);
         }
         zoneButtonsBox.setPadding(new Insets(10));
