@@ -29,7 +29,6 @@ public class FxUserInterface extends Application {
     private BorderPane root;
     private Canvas cityCanvas;
     private ZoneType selectedZoneType;
-    private boolean autoSteps;
     private Timer autoPlayTimer;
 
     public FxUserInterface() {
@@ -37,8 +36,9 @@ public class FxUserInterface extends Application {
         this.root = new BorderPane();
         this.cityCanvas = new Canvas(city.getWidth() * SQUARE_LENGTH, city.getHeight() * SQUARE_LENGTH);
         this.selectedZoneType = null;
-        this.autoSteps = false;
-        this.autoPlayTimer = null;
+        this.autoPlayTimer = null; // Methodes pour "stepAndRedraw()" et infos (labels attr)
+        // + methodes (getRandomHouseStartingPoint) (GetRandomStartingPoint (ZoneType Type) (appeler forall?) idk
+        // Dijsktra ?
     }
 
     @Override

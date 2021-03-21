@@ -22,7 +22,7 @@ public class Zone extends Entity {
 
     @Override
     public String conRepresentation() {
-        return Character.valueOf(zoneType.toString().charAt(0)).toString();
+        return zoneType.toString().substring(0, 1);
     }
 
     @Override
