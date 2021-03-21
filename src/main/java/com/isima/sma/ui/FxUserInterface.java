@@ -18,6 +18,9 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class FxUserInterface extends Application {
 
     private static final int SQUARE_LENGTH = 20;
@@ -26,12 +29,16 @@ public class FxUserInterface extends Application {
     private BorderPane root;
     private Canvas cityCanvas;
     private ZoneType selectedZoneType;
+    private boolean autoSteps;
+    private Timer autoPlayTimer;
 
     public FxUserInterface() {
         this.city = new City(30, 20);
         this.root = new BorderPane();
         this.cityCanvas = new Canvas(city.getWidth() * SQUARE_LENGTH, city.getHeight() * SQUARE_LENGTH);
         this.selectedZoneType = null;
+        this.autoSteps = false;
+        this.autoPlayTimer = null;
     }
 
     @Override
@@ -98,6 +105,25 @@ public class FxUserInterface extends Application {
             drawCity(cityCanvas.getGraphicsContext2D());
         });
         stepButtonsBox.getChildren().add(oneStepButton);
+
+        Button autoStepButton = new Button("Start/Stop auto steps");
+        autoStepButton.setOnAction(e -> {
+            if (autoPlayTimer == null) {
+                autoPlayTimer = new Timer();
+                autoPlayTimer.scheduleAtFixedRate(new TimerTask() {
+                    @Override
+                    public void run() {
+                        city.step();
+                        drawCity(cityCanvas.getGraphicsContext2D());
+                    }
+                }, 0, 80); // Set speed
+            } else {
+                autoPlayTimer.cancel();
+                autoPlayTimer = null;
+            }
+        });
+        stepButtonsBox.getChildren().add(autoStepButton);
+
         controlPanel.getChildren().add(stepButtonsBox);
 
         controlPanel.setPadding(new Insets(10));
