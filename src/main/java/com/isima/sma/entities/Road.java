@@ -20,8 +20,8 @@ public class Road extends Entity implements Iterable<Vehicle>, Comparable<Road> 
     private RoadState state;
     private boolean busStop;
 
-    public Road() {
-        super();
+    public Road(int x, int y) {
+        super(x, y);
         this.usury = 0;
         this.vehicles = new LinkedList<>();
         this.state = DEFAULT_STATE;

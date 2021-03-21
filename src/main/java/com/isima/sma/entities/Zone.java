@@ -6,12 +6,13 @@ public class Zone extends Entity {
 
     private ZoneType zoneType;
 
-    public Zone(ZoneType zoneType) {
+    public Zone(ZoneType zoneType, int x, int y) {
+        super(x, y);
         this.zoneType = zoneType;
     }
 
-    public Zone(String zoneTypeName) {
-        this(ZoneType.valueOf(zoneTypeName));
+    public Zone(String zoneTypeName, int x, int y) {
+        this(ZoneType.valueOf(zoneTypeName), x, y);
     }
 
     @Override

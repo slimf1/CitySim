@@ -76,7 +76,7 @@ public class FxUserInterface extends Application {
         zoneButtonsBox.getChildren().add(roadButton);
 
         for(ZoneType zoneType : ZoneType.values()) {
-            Button zoneButton = new Button(new Zone(zoneType).toString());
+            Button zoneButton = new Button(new Zone(zoneType, 0, 0).toString());
             zoneButton.setOnAction(e -> {
                 selectedZoneType = zoneType;
             });
@@ -84,6 +84,22 @@ public class FxUserInterface extends Application {
         }
         zoneButtonsBox.setPadding(new Insets(10));
         controlPanel.getChildren().add(zoneButtonsBox);
+
+        Label stepsLabel = new Label("Simulation");
+        stepsLabel.setPadding(new Insets(0, 0, 0, 5));
+        controlPanel.getChildren().add(stepsLabel);
+
+        HBox stepButtonsBox = new HBox();
+        stepButtonsBox.setSpacing(5.);
+        stepButtonsBox.setPadding(new Insets(0, 0, 0, 5));
+        Button oneStepButton = new Button("1 Step");
+        oneStepButton.setOnAction(e -> {
+            city.step();
+            drawCity(cityCanvas.getGraphicsContext2D());
+        });
+        stepButtonsBox.getChildren().add(oneStepButton);
+        controlPanel.getChildren().add(stepButtonsBox);
+
         controlPanel.setPadding(new Insets(10));
         root.setRight(controlPanel);
 
@@ -156,5 +172,6 @@ public class FxUserInterface extends Application {
             }
             x += SQUARE_LENGTH;
         }
+        System.out.println("[DEBUG] City redrawn");
     }
 }

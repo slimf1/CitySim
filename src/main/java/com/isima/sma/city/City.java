@@ -50,7 +50,7 @@ public class City implements Serializable {
     public boolean addRoad(int x, int y) {
         int index = x * height + y;
         if (isInsideGrid(x, y) && grid[index] == null) {
-            Road road = new Road();
+            Road road = new Road(x, y);
             grid[index] = road;
             roads.add(road);
             return true;
@@ -61,7 +61,7 @@ public class City implements Serializable {
     public boolean addZone(int x, int y, ZoneType zoneType) {
         int index = x * height + y;
         if (isInsideGrid(x, y) && grid[index] == null) {
-            Zone zone = new Zone(zoneType);
+            Zone zone = new Zone(zoneType, x, y);
             grid[index] = zone;
             if (zones.containsKey(zoneType)) {
                 zones.get(zoneType).add(zone);
