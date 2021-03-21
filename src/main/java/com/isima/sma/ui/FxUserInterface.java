@@ -28,7 +28,7 @@ public class FxUserInterface extends Application {
     private ZoneType selectedZoneType;
 
     public FxUserInterface() {
-        this.city = new City(30, 30);
+        this.city = new City(30, 20);
         this.root = new BorderPane();
         this.cityCanvas = new Canvas(city.getWidth() * SQUARE_LENGTH, city.getHeight() * SQUARE_LENGTH);
         this.selectedZoneType = null;
@@ -125,15 +125,17 @@ public class FxUserInterface extends Application {
         }
 
         if (redraw) {
-            drawCity(cityCanvas.getGraphicsContext2D());
-            System.out.println("DEBUG: canvas redrawn");
+            GraphicsContext gc = cityCanvas.getGraphicsContext2D();
+            gc.setFill(city.getEntityAt(column, row).fxRepresentation());
+            gc.fillRect(column * SQUARE_LENGTH, row * SQUARE_LENGTH, SQUARE_LENGTH, SQUARE_LENGTH);
+            System.out.println("DEBUG: zone redraw");
         }
     }
 
     private void handleMouseMoved(MouseEvent mouseEvent) {
         int column = (int)mouseEvent.getX() / SQUARE_LENGTH;
         int row = (int)mouseEvent.getY() / SQUARE_LENGTH;
-        Label infoLabel = new Label(String.format("(%d,%d) %s", row, column, city.getEntityAt(column, row)));
+        Label infoLabel = new Label("(" + column + ", " + row + ") " + city.getEntityAt(column, row));
         infoLabel.setPadding(new Insets(3, 0, 0, 0));
         root.setBottom(infoLabel);
     }
@@ -142,9 +144,9 @@ public class FxUserInterface extends Application {
         int x = 0;
         int y;
 
-        for(int i = 0; i < city.getHeight(); ++i) {
+        for(int i = 0; i < city.getWidth(); ++i) {
             y = 0;
-            for(int j = 0; j < city.getWidth(); ++j) {
+            for(int j = 0; j < city.getHeight(); ++j) {
                 Paint squarePaint = Color.BLACK; // By default
                 if (city.getEntityAt(i, j) != null) {
                     squarePaint = city.getEntityAt(i, j).fxRepresentation();

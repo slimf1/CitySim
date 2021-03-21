@@ -12,7 +12,7 @@ import java.util.*;
 
 public class City implements Serializable {
 
-    private static final int DEFAULT_WIDTH = 5;
+    private static final int DEFAULT_WIDTH = 15;
     private static final int DEFAULT_HEIGHT = 10;
 
     private Entity[] grid;
@@ -35,7 +35,7 @@ public class City implements Serializable {
 
     public Entity getEntityAt(int x, int y) {
         if (isInsideGrid(x, y))
-            return grid[x * width + y];
+            return grid[x * height + y];
         return null;
     }
 
@@ -48,7 +48,7 @@ public class City implements Serializable {
     }
 
     public boolean addRoad(int x, int y) {
-        int index = x * width + y;
+        int index = x * height + y;
         if (isInsideGrid(x, y) && grid[index] == null) {
             Road road = new Road();
             grid[index] = road;
@@ -59,7 +59,7 @@ public class City implements Serializable {
     }
 
     public boolean addZone(int x, int y, ZoneType zoneType) {
-        int index = x * width + y;
+        int index = x * height + y;
         if (isInsideGrid(x, y) && grid[index] == null) {
             Zone zone = new Zone(zoneType);
             grid[index] = zone;
@@ -74,11 +74,11 @@ public class City implements Serializable {
     }
 
     public boolean isInsideGrid(int x, int y) {
-        return (x >= 0 && x < height) && (y >= 0 && y < width);
+        return (x >= 0 && x < width) && (y >= 0 && y < height);
     }
 
     public boolean isRoad(int x, int y) {
-        return isInsideGrid(x, y) && grid[x * width + y] != null;
+        return isInsideGrid(x, y) && grid[x * height + y] != null;
     }
 
     /**
@@ -133,7 +133,7 @@ public class City implements Serializable {
 
         for (Pair<Vehicle, Pair<Integer, Integer>> p : changes) {
             Pair<Integer, Integer> nextPosition = p.getSecond();
-            ((Road)grid[nextPosition.getFirst() * width + nextPosition.getSecond()]).addVehicle(p.getFirst());
+            ((Road)grid[nextPosition.getFirst() * height + nextPosition.getSecond()]).addVehicle(p.getFirst());
         }
     }
 }

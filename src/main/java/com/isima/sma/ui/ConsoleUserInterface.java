@@ -37,10 +37,10 @@ public class ConsoleUserInterface {
 
     private String cityConsoleRepresentation() {
         StringBuilder builder = new StringBuilder();
-        for(int i = 0; i < city.getHeight(); ++i) {
+        for(int y = 0; y < city.getHeight(); ++y) {
             builder.append("[ ");
-            for(int j = 0; j < city.getWidth(); ++j) {
-                builder.append(city.getEntityAt(i, j) == null ? "_" : city.getEntityAt(i, j).conRepresentation());
+            for(int x = 0; x < city.getWidth(); ++x) {
+                builder.append(city.getEntityAt(x, y) == null ? "_" : city.getEntityAt(x, y).conRepresentation());
                 builder.append(' ');
             }
             builder.append("]\n");
@@ -56,8 +56,8 @@ public class ConsoleUserInterface {
                 showHelp();
                 break;
             case "set": // set 5 2 road
-                int x = Integer.parseInt(params[2]);
-                int y = Integer.parseInt(params[1]);
+                int x = Integer.parseInt(params[1]);
+                int y = Integer.parseInt(params[2]);
                 if (params[3].equalsIgnoreCase("road")) {
                     city.addRoad(x, y);
                 } else {
@@ -65,10 +65,10 @@ public class ConsoleUserInterface {
                 }
                 break;
             case "addvehicle": // Used for debug
-                int yDep = Integer.parseInt(params[1]);
-                int xDep = Integer.parseInt(params[2]);
-                int yDest = Integer.parseInt(params[3]);
-                int xDest = Integer.parseInt(params[4]);
+                int xDep = Integer.parseInt(params[1]);
+                int yDep = Integer.parseInt(params[2]);
+                int xDest = Integer.parseInt(params[3]);
+                int yDest = Integer.parseInt(params[4]);
 
                 Vehicle vehicle = new Vehicle();
                 vehicle.createPath(city, xDep, yDep, xDest, yDest);
