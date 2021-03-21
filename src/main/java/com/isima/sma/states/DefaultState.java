@@ -30,7 +30,11 @@ public class DefaultState implements RoadState {
     }
 
     @Override
-    public Color getColor() {
-        return Color.RED;
+    public Color getColor(Road road) {
+        Color baseColor = Color.RED;
+        int clampedCost = Math.max(0, Math.min(MAX_COST, road.cost()));
+        for(int i = 0; i < clampedCost; ++i)
+            baseColor = baseColor.darker();
+        return baseColor;
     }
 }

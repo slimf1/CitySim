@@ -128,7 +128,6 @@ public class FxUserInterface extends Application {
             GraphicsContext gc = cityCanvas.getGraphicsContext2D();
             gc.setFill(city.getEntityAt(column, row).fxRepresentation());
             gc.fillRect(column * SQUARE_LENGTH, row * SQUARE_LENGTH, SQUARE_LENGTH, SQUARE_LENGTH);
-            System.out.println("DEBUG: zone redraw");
         }
     }
 

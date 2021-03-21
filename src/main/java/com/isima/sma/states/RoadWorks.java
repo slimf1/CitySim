@@ -32,7 +32,7 @@ public class RoadWorks implements RoadState {
     }
 
     @Override
-    public Color getColor() {
+    public Color getColor(Road road) {
         return Color.ORANGE;
     }
 }

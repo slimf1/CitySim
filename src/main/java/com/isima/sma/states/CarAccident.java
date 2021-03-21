@@ -31,7 +31,7 @@ public class CarAccident implements RoadState {
     }
 
     @Override
-    public Color getColor() {
+    public Color getColor(Road road) {
         return Color.DEEPPINK;
     }
 }

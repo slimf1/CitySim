@@ -78,11 +78,7 @@ public class Road extends Entity implements Iterable<Vehicle>, Comparable<Road> 
 
     @Override
     public Paint fxRepresentation() {
-        Color baseColor = state.getColor();
-        int clampedCost = Math.max(0, Math.min(MAX_COST, cost()));
-        for(int i = 0; i < clampedCost; ++i)
-            baseColor = baseColor.darker();
-        return baseColor;
+        return state.getColor(this);
     }
 
     @Override

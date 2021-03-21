@@ -6,5 +6,5 @@ import javafx.scene.paint.Color;
 public interface RoadState {
     int updateCost(Road road, int initialCost);
     void updateState(Road road);
-    Color getColor();
+    Color getColor(Road road);
 }
