@@ -15,6 +15,10 @@ public class Zone extends Entity {
         this(ZoneType.valueOf(zoneTypeName), x, y);
     }
 
+    public final ZoneType getZoneType() {
+        return zoneType;
+    }
+
     @Override
     public Paint fxRepresentation() {
         return zoneType.getPaint();

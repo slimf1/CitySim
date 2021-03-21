@@ -30,13 +30,22 @@ public class FxUserInterface extends Application {
     private Canvas cityCanvas;
     private ZoneType selectedZoneType;
     private Timer autoPlayTimer;
+    private Label hoverLabel;
+    private boolean removeOnClick;
 
     public FxUserInterface() {
         this.city = new City(30, 20);
         this.root = new BorderPane();
         this.cityCanvas = new Canvas(city.getWidth() * SQUARE_LENGTH, city.getHeight() * SQUARE_LENGTH);
         this.selectedZoneType = null;
-        this.autoPlayTimer = null; // Methodes pour "stepAndRedraw()" et infos (labels attr)
+        this.autoPlayTimer = null;
+        this.hoverLabel = new Label();
+        this.removeOnClick = false;
+
+        hoverLabel.setPadding(new Insets(3, 0, 0, 0));
+        root.setBottom(hoverLabel);
+
+        // Methodes pour "stepAndRedraw()" et infos (labels attr)
         // + methodes (getRandomHouseStartingPoint) (GetRandomStartingPoint (ZoneType Type) (appeler forall?) idk
         // Dijsktra ?
     }
@@ -96,10 +105,7 @@ public class FxUserInterface extends Application {
         stepButtonsBox.setSpacing(5.);
         stepButtonsBox.setPadding(new Insets(0, 0, 0, 5));
         Button oneStepButton = new Button("1 Step");
-        oneStepButton.setOnAction(e -> {
-            city.step();
-            drawCity(cityCanvas.getGraphicsContext2D());
-        });
+        oneStepButton.setOnAction(e -> stepAndRedraw());
         stepButtonsBox.getChildren().add(oneStepButton);
 
         Button autoStepButton = new Button("Start/Stop auto steps");
@@ -109,8 +115,7 @@ public class FxUserInterface extends Application {
                 autoPlayTimer.scheduleAtFixedRate(new TimerTask() {
                     @Override
                     public void run() {
-                        city.step();
-                        drawCity(cityCanvas.getGraphicsContext2D());
+                        stepAndRedraw();
                     }
                 }, 0, 80); // Set speed
             } else {
@@ -119,8 +124,14 @@ public class FxUserInterface extends Application {
             }
         });
         stepButtonsBox.getChildren().add(autoStepButton);
-
         controlPanel.getChildren().add(stepButtonsBox);
+
+        Button deleteButton = new Button("Remove");
+        deleteButton.setOnAction(e -> {
+            removeOnClick = !removeOnClick;
+            System.out.println("x = " + removeOnClick);
+        });
+        controlPanel.getChildren().add(deleteButton);
 
         controlPanel.setPadding(new Insets(10));
         root.setRight(controlPanel);
@@ -147,12 +158,19 @@ public class FxUserInterface extends Application {
         primaryStage.show();
     }
 
+    private void stepAndRedraw() {
+        city.step();
+        drawCity(cityCanvas.getGraphicsContext2D());
+    }
+
     private void handleMouseClicked(MouseEvent mouseEvent) {
         int column = (int)mouseEvent.getX() / SQUARE_LENGTH;
         int row = (int)mouseEvent.getY() / SQUARE_LENGTH;
         boolean redraw = false;
 
-        if (selectedZoneType == null) {
+        if (removeOnClick && city.removeAt(column, row)) {
+            redraw = true;
+        } else if (selectedZoneType == null) {
             if (city.addRoad(column, row)) {
                 redraw = true;
             }
@@ -164,7 +182,10 @@ public class FxUserInterface extends Application {
 
         if (redraw) {
             GraphicsContext gc = cityCanvas.getGraphicsContext2D();
-            gc.setFill(city.getEntityAt(column, row).fxRepresentation());
+            if (city.getEntityAt(column, row) != null)
+                gc.setFill(city.getEntityAt(column, row).fxRepresentation());
+            else
+                gc.setFill(Color.BLACK);
             gc.fillRect(column * SQUARE_LENGTH, row * SQUARE_LENGTH, SQUARE_LENGTH, SQUARE_LENGTH);
         }
     }
@@ -172,9 +193,7 @@ public class FxUserInterface extends Application {
     private void handleMouseMoved(MouseEvent mouseEvent) {
         int column = (int)mouseEvent.getX() / SQUARE_LENGTH;
         int row = (int)mouseEvent.getY() / SQUARE_LENGTH;
-        Label infoLabel = new Label("(" + column + ", " + row + ") " + city.getEntityAt(column, row));
-        infoLabel.setPadding(new Insets(3, 0, 0, 0));
-        root.setBottom(infoLabel);
+        hoverLabel.setText("(" + column + ", " + row + ") " + city.getEntityAt(column, row));
     }
 
     public void drawCity(GraphicsContext gc) {
@@ -194,6 +213,5 @@ public class FxUserInterface extends Application {
             }
             x += SQUARE_LENGTH;
         }
-        //System.out.println("[DEBUG] City redrawn");
     }
 }

@@ -74,6 +74,22 @@ public class City implements Serializable {
         return false;
     }
 
+    public boolean removeAt(int x, int y) {
+        int index = x * height + y;
+        if (isInsideGrid(x, y) && grid[index] != null) {
+            if (grid[index] instanceof Road) {
+                roads.remove(grid[index]);
+            } else if (grid[index] instanceof Zone) {
+                zones.get(((Zone)grid[index]).getZoneType()).remove(grid[index]);
+            } else {
+                return false;
+            }
+            grid[index] = null;
+            return true;
+        }
+        return false;
+    }
+
     public boolean isInsideGrid(int x, int y) {
         return (x >= 0 && x < width) && (y >= 0 && y < height);
     }
