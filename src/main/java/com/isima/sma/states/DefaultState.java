@@ -6,8 +6,8 @@ import javafx.scene.paint.Color;
 
 public class DefaultState implements RoadState {
 
-    private static final int MAX_COST = 30;
-    private static final int MAX_USURY = 100;
+    private static final int MAX_COST = 80;
+    private static final int MAX_USURY = 1000;
 
     @Override
     public int updateCost(Road road, int initialCost) {
@@ -26,7 +26,6 @@ public class DefaultState implements RoadState {
             road.setState(new RoadWorks(road.getUsury() / 3));
             return;
         }
-
     }
 
     @Override

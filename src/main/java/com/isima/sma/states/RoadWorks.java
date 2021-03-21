@@ -25,7 +25,7 @@ public class RoadWorks implements RoadState {
 
     @Override
     public void updateState(Road road) {
-        if (duration-- <= 0) { // Travaux finis
+        if (duration-- <= 0) {
             road.setUsury(0);
             road.setState(Road.DEFAULT_STATE);
         }

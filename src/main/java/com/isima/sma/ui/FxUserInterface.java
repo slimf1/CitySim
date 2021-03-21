@@ -172,6 +172,6 @@ public class FxUserInterface extends Application {
             }
             x += SQUARE_LENGTH;
         }
-        System.out.println("[DEBUG] City redrawn");
+        //System.out.println("[DEBUG] City redrawn");
     }
 }

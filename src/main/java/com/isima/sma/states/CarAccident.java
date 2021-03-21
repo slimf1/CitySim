@@ -5,7 +5,7 @@ import javafx.scene.paint.Color;
 
 public class CarAccident implements RoadState {
 
-    private static final int DEFAULT_DURATION = 3;
+    private static final int DEFAULT_DURATION = 1;
     private static final int COST_DIFFERENCE = 100;
 
     private int duration;
@@ -25,13 +25,13 @@ public class CarAccident implements RoadState {
 
     @Override
     public void updateState(Road road) {
-        if (duration-- <= 0) {
+        if (--duration <= 0) {
             road.setState(Road.DEFAULT_STATE);
         }
     }
 
     @Override
     public Color getColor(Road road) {
-        return Color.DEEPPINK;
+        return Color.MAGENTA;
     }
 }

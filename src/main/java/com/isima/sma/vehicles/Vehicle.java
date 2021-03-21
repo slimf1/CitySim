@@ -6,6 +6,7 @@ import com.isima.sma.strategies.PathingStrategy;
 import com.isima.sma.utils.Pair;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 public class Vehicle {
@@ -28,7 +29,9 @@ public class Vehicle {
     }
 
     public void createPath(City city, int xDep, int yDep, int xDest, int yDest) {
-        path = new LinkedList<>(pathingStrategy.createPath(city, xDep, yDep, xDest, yDest));
+        List<Pair<Integer, Integer>> createdPath = pathingStrategy.createPath(city, xDep, yDep, xDest, yDest);
+        if (createdPath != null)
+            path = new LinkedList<>(createdPath);
     }
 
     public Pair<Integer, Integer> pollNextPosition() {
@@ -36,7 +39,8 @@ public class Vehicle {
     }
 
     public boolean isAtDestination() {
-        return path.size() <= 1;
+        if (path == null) return true;
+        return path.size() < 1;
     }
 
 

@@ -4,11 +4,13 @@ import com.isima.sma.entities.Entity;
 import com.isima.sma.entities.Road;
 import com.isima.sma.entities.Zone;
 import com.isima.sma.entities.ZoneType;
+import com.isima.sma.utils.MTRandom;
 import com.isima.sma.utils.Pair;
 import com.isima.sma.vehicles.Vehicle;
 
 import java.io.Serializable;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class City implements Serializable {
 
@@ -78,7 +80,7 @@ public class City implements Serializable {
     }
 
     public boolean isRoad(int x, int y) {
-        return isInsideGrid(x, y) && grid[x * height + y] != null;
+        return isInsideGrid(x, y) && grid[x * height + y] instanceof Road;
     }
 
     /**
@@ -90,8 +92,6 @@ public class City implements Serializable {
      * @return A set of coordinates of the adjacent roads
      */
     public Set<Pair<Integer, Integer>> getAdjacentRoads(int x, int y) {
-        if (!isRoad(x, y))
-            throw new IllegalArgumentException("");
 
         Set<Pair<Integer, Integer>> adjacentRoads = new HashSet<>();
 
@@ -108,17 +108,50 @@ public class City implements Serializable {
     }
 
     public void step() {
-        createTrips();
         moveVehicles();
+        createTrips();
     }
 
     private void createTrips() {
+        createHomeToShopTrip();
+    }
+
+    private void createHomeToShopTrip() { // faire for resid
+        if (!zones.containsKey(ZoneType.RESIDENTIAL) || !zones.containsKey(ZoneType.COMMERCIAL)) return;
+        Zone startingHome = zones
+                .get(ZoneType.RESIDENTIAL)
+                .get(MTRandom.getInstance().nextInt(zones.get(ZoneType.RESIDENTIAL).size()));
+        Zone destinationShop = zones
+                .get(ZoneType.COMMERCIAL)
+                .get(MTRandom.getInstance().nextInt(zones.get(ZoneType.COMMERCIAL).size()));
+
+        try {
+            Pair<Integer, Integer> startingRoad = getAdjacentRoads(startingHome.getX(), startingHome.getY())
+                    .stream()
+                    .findFirst()
+                    .get();
+
+            Pair<Integer, Integer> destinationRoad = getAdjacentRoads(destinationShop.getX(), destinationShop.getY())
+                    .stream()
+                    .findFirst()
+                    .get();
+
+            Vehicle vehicle = new Vehicle();
+            vehicle.createPath(this, startingRoad.getFirst(), startingRoad.getSecond(),
+                    destinationRoad.getFirst(), destinationRoad.getSecond());
+
+            ((Road)getEntityAt(startingRoad.getFirst(), startingRoad.getSecond())).addVehicle(vehicle);
+            //System.out.println("[DEBUG] Created path");
+        } catch (NoSuchElementException e) {
+            System.err.println("[DEBUG] tried to create path but failed");
+        }
     }
 
     private void moveVehicles() {
         List<Pair<Vehicle, Pair<Integer, Integer>>> changes = new ArrayList<>();
 
         for(Road road : roads) {
+            road.updateState();
             Iterator<Vehicle> it = road.iterator();
             while (it.hasNext()) {
                 Vehicle vehicle = it.next();
@@ -128,7 +161,6 @@ public class City implements Serializable {
                     // handles buses
                 }
             }
-            road.updateState();
         }
 
         for (Pair<Vehicle, Pair<Integer, Integer>> p : changes) {
