@@ -42,7 +42,7 @@ public class FxUserInterface extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         primaryStage.setScene(new Scene(root));
 
         // City canvas | class RoadNetwork (grid etc)

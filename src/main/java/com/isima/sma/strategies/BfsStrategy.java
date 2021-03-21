@@ -27,7 +27,7 @@ public class BfsStrategy implements PathingStrategy {
         List<Pair<Integer, Integer>> path = new ArrayList<>();
         Set<Pair<Integer, Integer>> visitedNodes = new HashSet<>();
         Map<Pair<Integer, Integer>, Pair<Integer, Integer>> parents = new HashMap<>();
-        Queue<Pair<Integer, Integer>> queue = new PriorityQueue<Pair<Integer, Integer>>(comparator);
+        Queue<Pair<Integer, Integer>> queue = new PriorityQueue<>(comparator);
         boolean atDestination = false;
 
         visitedNodes.add(new Pair<>(xDep, yDep));
