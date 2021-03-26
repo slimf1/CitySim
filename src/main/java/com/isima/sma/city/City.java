@@ -8,7 +8,7 @@ import com.isima.sma.utils.MTRandom;
 import com.isima.sma.utils.Pair;
 import com.isima.sma.vehicles.Vehicle;
 
-import java.io.Serializable;
+import java.io.*;
 import java.util.*;
 
 public class City implements Serializable {
@@ -16,9 +16,11 @@ public class City implements Serializable {
     private static final int DEFAULT_WIDTH = 15;
     private static final int DEFAULT_HEIGHT = 10;
 
+    private static final long serialVersionUID = 3601501169591176149L;
+
     private Entity[] grid;
     private List<Road> roads;
-    private Map<ZoneType, List<Zone>> zones; // Map : zoneType => List ?
+    private Map<ZoneType, List<Zone>> zones;
     private int width;
     private int height;
 
@@ -46,6 +48,31 @@ public class City implements Serializable {
 
     public final int getHeight() {
         return height;
+    }
+
+    public boolean writeToFile(String filename) {
+        try(FileOutputStream fos = new FileOutputStream(filename);
+            ObjectOutputStream oos = new ObjectOutputStream(fos)) {
+            oos.writeObject(this);
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.err.println(e.getMessage());
+            return false;
+        }
+    }
+
+    public static City loadFromFile(String filename) {
+        City city = null;
+        try(FileInputStream fis = new FileInputStream(filename);
+            ObjectInputStream ois = new ObjectInputStream(fis)) {
+            city = (City)ois.readObject();
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        } catch (ClassNotFoundException e) {
+            System.err.println(e.getMessage());
+        }
+        return city;
     }
 
     public boolean addRoad(int x, int y) {

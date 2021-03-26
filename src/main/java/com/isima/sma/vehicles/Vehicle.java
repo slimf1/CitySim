@@ -22,6 +22,7 @@ public class Vehicle {
 
     public Vehicle(PathingStrategy pathingStrategy) {
         this.pathingStrategy = pathingStrategy;
+        this.path = null;
     }
 
     public final void setPathingStrategy(PathingStrategy pathingStrategy) {
@@ -42,6 +43,4 @@ public class Vehicle {
         if (path == null) return true;
         return path.size() < 1;
     }
-
-
 }

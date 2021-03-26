@@ -4,7 +4,9 @@ import com.isima.sma.entities.Road;
 import com.isima.sma.utils.MTRandom;
 import javafx.scene.paint.Color;
 
-public class DefaultState implements RoadState {
+import java.io.Serializable;
+
+public class DefaultState implements RoadState, Serializable {
 
     private static final int MAX_COST = 80;
     private static final int MAX_USURY = 1000;

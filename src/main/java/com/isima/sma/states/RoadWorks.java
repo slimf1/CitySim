@@ -3,7 +3,9 @@ package com.isima.sma.states;
 import com.isima.sma.entities.Road;
 import javafx.scene.paint.Color;
 
-public class RoadWorks implements RoadState {
+import java.io.Serializable;
+
+public class RoadWorks implements RoadState, Serializable {
 
     private static final int DEFAULT_DURATION = 10;
     private static final int FACTOR = 2;

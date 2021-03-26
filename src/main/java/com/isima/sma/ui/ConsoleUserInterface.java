@@ -40,8 +40,9 @@ public class ConsoleUserInterface {
         for(int y = 0; y < city.getHeight(); ++y) {
             builder.append("[ ");
             for(int x = 0; x < city.getWidth(); ++x) {
-                builder.append(city.getEntityAt(x, y) == null ? "_" : city.getEntityAt(x, y).conRepresentation());
-                builder.append(' ');
+                builder.append(city.getEntityAt(x, y) == null
+                            ? "_" : city.getEntityAt(x, y).conRepresentation())
+                       .append(' ');
             }
             builder.append("]\n");
         }
@@ -78,6 +79,22 @@ public class ConsoleUserInterface {
                 int steps = Integer.parseInt(params[1]);
                 for(int i = 0; i < steps; ++i)
                     city.step();
+                break;
+            case "save":
+                if (city.writeToFile(params[1])) {
+                    System.out.println("Success: Saved city to "+ params[1]);
+                } else {
+                    System.out.println("Error: Could not save the city");
+                }
+                break;
+            case "load":
+                City newCity = null;
+                if ((newCity = City.loadFromFile(params[1])) != null) {
+                    System.out.println("Sucess: Loaded city from file");
+                    city = newCity;
+                } else {
+                    System.out.println("Error: Could not load the city from " + params[1]);
+                }
                 break;
             default:
                 System.err.println("Invalid command. Type help for available commands.");

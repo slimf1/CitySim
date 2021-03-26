@@ -3,7 +3,9 @@ package com.isima.sma.entities;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
-public abstract class Entity {
+import java.io.Serializable;
+
+public abstract class Entity implements Serializable {
 
     private int x;
     private int y;

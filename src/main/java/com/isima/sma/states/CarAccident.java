@@ -3,7 +3,9 @@ package com.isima.sma.states;
 import com.isima.sma.entities.Road;
 import javafx.scene.paint.Color;
 
-public class CarAccident implements RoadState {
+import java.io.Serializable;
+
+public class CarAccident implements RoadState, Serializable {
 
     private static final int DEFAULT_DURATION = 1;
     private static final int COST_DIFFERENCE = 100;
