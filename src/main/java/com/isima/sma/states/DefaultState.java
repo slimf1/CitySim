@@ -11,6 +11,8 @@ public class DefaultState implements RoadState, Serializable {
     private static final int MAX_COST = 80;
     private static final int MAX_USURY = 1000;
 
+    private static final long serialVersionUID = 7182582293063989705L;
+
     @Override
     public int updateCost(Road road, int initialCost) {
         return initialCost;

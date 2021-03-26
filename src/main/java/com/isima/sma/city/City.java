@@ -16,8 +16,6 @@ public class City implements Serializable {
     private static final int DEFAULT_WIDTH = 15;
     private static final int DEFAULT_HEIGHT = 10;
 
-    private static final long serialVersionUID = 3601501169591176149L;
-
     private Entity[] grid;
     private List<Road> roads;
     private Map<ZoneType, List<Zone>> zones;

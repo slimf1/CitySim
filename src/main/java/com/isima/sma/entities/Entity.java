@@ -7,6 +7,8 @@ import java.io.Serializable;
 
 public abstract class Entity implements Serializable {
 
+    private static final long serialVersionUID = 7808675342380405440L;
+
     private int x;
     private int y;
 

@@ -10,6 +10,8 @@ public class CarAccident implements RoadState, Serializable {
     private static final int DEFAULT_DURATION = 1;
     private static final int COST_DIFFERENCE = 100;
 
+    private static final long serialVersionUID = 6242332304138062867L;
+
     private int duration;
 
     public CarAccident() {

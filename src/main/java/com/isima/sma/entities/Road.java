@@ -14,6 +14,8 @@ public class Road extends Entity implements Iterable<Vehicle>, Comparable<Road> 
     private static final int MAX_COST = 10;
     public static final RoadState DEFAULT_STATE = new DefaultState();
 
+    private static final long serialVersionUID = -2966220689110826407L;
+
     private int usury;
     private Queue<Vehicle> vehicles;
     private RoadState state;

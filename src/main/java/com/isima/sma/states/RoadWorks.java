@@ -10,6 +10,8 @@ public class RoadWorks implements RoadState, Serializable {
     private static final int DEFAULT_DURATION = 10;
     private static final int FACTOR = 2;
 
+    private static final long serialVersionUID = 6583558997930872437L;
+
     private int duration;
 
     public RoadWorks() {
