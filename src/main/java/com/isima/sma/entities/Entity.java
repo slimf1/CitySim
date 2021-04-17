@@ -9,8 +9,8 @@ public abstract class Entity implements Serializable {
 
     private static final long serialVersionUID = 7808675342380405440L;
 
-    private int x;
-    private int y;
+    private final int x;
+    private final int y;
 
     public Entity(int x, int y) {
         this.x = x;
