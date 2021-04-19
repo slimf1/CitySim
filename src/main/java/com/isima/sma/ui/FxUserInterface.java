@@ -3,8 +3,11 @@ package com.isima.sma.ui;
 import com.isima.sma.city.City;
 import com.isima.sma.entities.Zone;
 import com.isima.sma.entities.ZoneType;
+import com.isima.sma.utils.Clock;
 import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
@@ -15,6 +18,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.scene.shape.Box;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -24,6 +30,9 @@ import java.util.TimerTask;
 public class FxUserInterface extends Application {
 
     private static final int SQUARE_LENGTH = 20;
+    private static final int CLOCK_X = 200;
+    private static final int CLOCK_Y = 0;
+    private static final int CLOCK_R = 25;
 
     private City city;
     private BorderPane root;
@@ -32,6 +41,8 @@ public class FxUserInterface extends Application {
     private Timer autoPlayTimer;
     private Label hoverLabel;
     private boolean removeOnClick;
+    private VBox controlPanel;
+    private Group clockGroup;
 
     public FxUserInterface() {
         this.city = new City(30, 20);
@@ -41,7 +52,7 @@ public class FxUserInterface extends Application {
         this.autoPlayTimer = null;
         this.hoverLabel = new Label();
         this.removeOnClick = false;
-
+        this.controlPanel = new VBox();
         hoverLabel.setPadding(new Insets(3, 0, 0, 0));
         root.setBottom(hoverLabel);
 
@@ -71,13 +82,36 @@ public class FxUserInterface extends Application {
                 "-fx-border-color: black;");
         root.setCenter(cityCanvas);
 
+
+
+
+
         // Group
-        VBox controlPanel = new VBox();
+
         Label titleLabel = new Label("CitySim");
         titleLabel.setFont(new Font("Arial", 30));
         titleLabel.setTextFill(Color.web("#0076a3"));
         titleLabel.setPadding(new Insets(5)); //top, right, bottom, left
         controlPanel.getChildren().add(titleLabel);
+
+
+        // Clock
+        Circle clockCircle = new Circle();
+        clockCircle.setCenterX(CLOCK_X);
+        clockCircle.setCenterY(CLOCK_Y);
+        clockCircle.setRadius(CLOCK_R);
+        clockCircle.setFill(Color.GREY);
+
+
+
+        Line clockTick = new Line(CLOCK_X, CLOCK_Y, CLOCK_X, CLOCK_Y - CLOCK_R);
+        clockTick.setFill(Color.BEIGE);
+        clockGroup = new Group();
+        clockGroup.getChildren().add(clockCircle);
+        clockGroup.getChildren().add(clockTick);
+        controlPanel.getChildren().add(clockGroup);
+
+        // End Clock
 
         Label zonesLabel = new Label("Zones");
         zonesLabel.setPadding(new Insets(0, 0, 0, 5));
@@ -117,7 +151,7 @@ public class FxUserInterface extends Application {
                     public void run() {
                         stepAndRedraw();
                     }
-                }, 0, 80); // Set speed
+                }, 0, 200); // Set speed
             } else {
                 autoPlayTimer.cancel();
                 autoPlayTimer = null;
@@ -132,6 +166,7 @@ public class FxUserInterface extends Application {
             System.out.println("x = " + removeOnClick);
         });
         controlPanel.getChildren().add(deleteButton);
+
 
         controlPanel.setPadding(new Insets(10));
         root.setRight(controlPanel);
@@ -161,6 +196,8 @@ public class FxUserInterface extends Application {
     private void stepAndRedraw() {
         city.step();
         drawCity(cityCanvas.getGraphicsContext2D());
+        Clock.getInstance().incrementTime(1);
+        drawClock();
     }
 
     private void handleMouseClicked(MouseEvent mouseEvent) {
@@ -203,7 +240,7 @@ public class FxUserInterface extends Application {
         for(int i = 0; i < city.getWidth(); ++i) {
             y = 0;
             for(int j = 0; j < city.getHeight(); ++j) {
-                Paint squarePaint = Color.BLACK; // By default
+                Paint squarePaint = Color.WHITE; // By default
                 if (city.getEntityAt(i, j) != null) {
                     squarePaint = city.getEntityAt(i, j).fxRepresentation();
                 }
@@ -212,6 +249,21 @@ public class FxUserInterface extends Application {
                 y += SQUARE_LENGTH;
             }
             x += SQUARE_LENGTH;
+        }
+
+
+    }
+
+    public void drawClock(){
+        double angle = - 2 * Math.PI * ((double)Clock.getInstance().getTime() / Clock.TICK_MAX);
+        int x = CLOCK_X - (int)(CLOCK_R * Math.sin(angle));
+        int y = CLOCK_Y - (int)(CLOCK_R * Math.cos(angle));
+        int index = controlPanel.getChildren().indexOf(clockGroup);
+        for(Node n : ((Group)controlPanel.getChildren().get(index)).getChildren()){
+            if(n instanceof Line){
+                ((Line)n).setEndX(x);
+                ((Line)n).setEndY(y);
+            }
         }
     }
 }
