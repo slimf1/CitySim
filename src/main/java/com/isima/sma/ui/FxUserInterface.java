@@ -83,10 +83,6 @@ public class FxUserInterface extends Application {
                 "-fx-border-color: black;");
         root.setCenter(cityCanvas);
 
-
-
-
-
         // Group
 
         Label titleLabel = new Label("CitySim");
@@ -95,15 +91,13 @@ public class FxUserInterface extends Application {
         titleLabel.setPadding(new Insets(5)); //top, right, bottom, left
         controlPanel.getChildren().add(titleLabel);
 
-
         // Clock
         Circle clockCircle = new Circle();
         clockCircle.setCenterX(CLOCK_X);
         clockCircle.setCenterY(CLOCK_Y);
         clockCircle.setRadius(CLOCK_R);
         clockCircle.setFill(Color.GREY);
-
-
+        clockCircle.setOnMouseMoved(this::onClockMouseMoved);
 
         Line clockTick = new Line(CLOCK_X, CLOCK_Y, CLOCK_X, CLOCK_Y - CLOCK_R);
         clockTick.setFill(Color.BEIGE);
@@ -168,7 +162,6 @@ public class FxUserInterface extends Application {
         });
         controlPanel.getChildren().add(deleteButton);
 
-
         controlPanel.setPadding(new Insets(10));
         root.setRight(controlPanel);
 
@@ -192,6 +185,18 @@ public class FxUserInterface extends Application {
         root.setTop(hbox);
 
         primaryStage.show();
+    }
+
+    /**
+     * Met à jour le label d'information quand on
+     * survole l'horloge
+     * @author Slimane F.
+     * @param event L'évènement de la souris
+     */
+    private void onClockMouseMoved(MouseEvent event) {
+        int ticks = Clock.getInstance().getTime();
+        String timestamp = Clock.formatTime(ticks);
+        hoverLabel.setText(timestamp);
     }
 
     private void stepAndRedraw() {
@@ -235,8 +240,6 @@ public class FxUserInterface extends Application {
         }
     }
 
-
-
     private void handleMouseMoved(MouseEvent mouseEvent) {
         int column = (int)mouseEvent.getX() / SQUARE_LENGTH;
         int row = (int)mouseEvent.getY() / SQUARE_LENGTH;
@@ -266,8 +269,6 @@ public class FxUserInterface extends Application {
             }
             x += SQUARE_LENGTH;
         }
-
-
     }
 
     public void drawClock(){
@@ -289,7 +290,6 @@ public class FxUserInterface extends Application {
         double roadPaint = SQUARE_LENGTH / 9;
         int x = i * SQUARE_LENGTH;
         int y = j * SQUARE_LENGTH;
-
 
         // Road up
         if(j-1 >= 0 && city.getEntityAt(i,j-1) instanceof Road){
