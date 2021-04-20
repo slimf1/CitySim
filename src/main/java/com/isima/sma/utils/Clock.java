@@ -4,16 +4,14 @@ public class Clock {
 
     public static final int TICK_MAX = 300;
 
-    private static int time = 0;
+    private int time;
     private static final Clock instance = new Clock();
 
-
     private Clock(){
-
+        time = 0;
     }
 
-
-    public final static Clock getInstance(){
+    public static Clock getInstance(){
         return instance;
     }
 
@@ -32,5 +30,4 @@ public class Clock {
     void setTime(int t){
         this.time = t;
     }
-
 }
