@@ -33,10 +33,10 @@ public class DefaultState implements RoadState, Serializable {
 
     @Override
     public Color getColor(Road road) {
-        Color baseColor = Color.RED;
+        Color baseColor = Color.BLACK;
         int clampedCost = Math.max(0, Math.min(MAX_COST, road.cost()));
         for(int i = 0; i < clampedCost; ++i)
-            baseColor = baseColor.darker();
+            baseColor = baseColor.brighter();
         return baseColor;
     }
 }
