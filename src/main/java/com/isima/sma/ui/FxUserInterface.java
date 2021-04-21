@@ -152,7 +152,7 @@ public class FxUserInterface extends Application {
                     public void run() {
                         stepAndRedraw();
                     }
-                }, 0, 200); // Set speed
+                }, 0, 20); // Set speed
             } else {
                 autoPlayTimer.cancel();
                 autoPlayTimer = null;
@@ -198,6 +198,7 @@ public class FxUserInterface extends Application {
         city.step();
         drawCity(cityCanvas.getGraphicsContext2D());
         Clock.getInstance().incrementTime(1);
+        city.setTimeOfDay();
         drawClock();
     }
 
