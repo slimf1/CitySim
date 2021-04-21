@@ -146,7 +146,7 @@ public class FxUserInterface extends Application {
                     public void run() {
                         stepAndRedraw();
                     }
-                }, 0, 20); // Set speed
+                }, 0, 200); // Set speed
             } else {
                 autoPlayTimer.cancel();
                 autoPlayTimer = null;

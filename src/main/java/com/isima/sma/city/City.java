@@ -11,7 +11,6 @@ import com.isima.sma.utils.TimeOfDay;
 import com.isima.sma.vehicles.Vehicle;
 
 import java.io.*;
-import java.sql.Time;
 import java.util.*;
 
 public class City implements Serializable {
@@ -37,16 +36,17 @@ public class City implements Serializable {
         this.zones = new HashMap<>();
         this.width = width;
         this.height = height;
+        this.timeOfDay = TimeOfDay.DAWN;
 
         // Building period tools
         float part = Clock.TICK_MAX / 30;
         timesTOD = new HashMap<>();
-        timesTOD.putIfAbsent(TimeOfDay.dawn, new Pair<Integer, Integer>((int)(4*part+1), (int)(6*part)));
-        timesTOD.putIfAbsent(TimeOfDay.morning, new Pair<Integer, Integer>((int)(6*part+1), (int)(12*part)));
-        timesTOD.putIfAbsent(TimeOfDay.midday, new Pair<Integer, Integer>((int)(12*part+1),(int) (17*part)));
-        timesTOD.putIfAbsent(TimeOfDay.afternoon, new Pair<Integer, Integer>((int)(17*part+1), (int)(22*part)));
-        timesTOD.putIfAbsent(TimeOfDay.dusk, new Pair<Integer, Integer>((int)(22*part+1), (int)(25*part)));
-        timesTOD.putIfAbsent(TimeOfDay.night, new Pair<Integer, Integer>((int)(25*part+1), (int)(4*part)));
+        timesTOD.putIfAbsent(TimeOfDay.DAWN, new Pair<Integer, Integer>((int)(4*part+1), (int)(6*part)));
+        timesTOD.putIfAbsent(TimeOfDay.MORNING, new Pair<Integer, Integer>((int)(6*part+1), (int)(12*part)));
+        timesTOD.putIfAbsent(TimeOfDay.MIDDAY, new Pair<Integer, Integer>((int)(12*part+1),(int) (17*part)));
+        timesTOD.putIfAbsent(TimeOfDay.AFTERNOON, new Pair<Integer, Integer>((int)(17*part+1), (int)(22*part)));
+        timesTOD.putIfAbsent(TimeOfDay.DUSK, new Pair<Integer, Integer>((int)(22*part+1), (int)(25*part)));
+        timesTOD.putIfAbsent(TimeOfDay.NIGHT, new Pair<Integer, Integer>((int)(25*part+1), (int)(4*part)));
     }
 
     public Entity getEntityAt(int x, int y) {
@@ -67,11 +67,11 @@ public class City implements Serializable {
         int tickMax = Clock.TICK_MAX;
         int currentTime = Clock.getInstance().getTime();
         TimeOfDay newTOD = null;
-        if(this.timeOfDay == null || currentTime == timesTOD.get(TimeOfDay.night).getFirst() ){
-            this.timeOfDay = TimeOfDay.night;
+        if(this.timeOfDay == null || currentTime == timesTOD.get(TimeOfDay.NIGHT).getFirst() ){
+            this.timeOfDay = TimeOfDay.NIGHT;
         }
         else{
-            if(currentTime < timesTOD.get(TimeOfDay.night).getFirst()){
+            if(currentTime < timesTOD.get(TimeOfDay.NIGHT).getFirst()){
                 if(currentTime > timesTOD.get(timeOfDay).getSecond()){
                     for(Map.Entry<TimeOfDay, Pair<Integer, Integer>> entry : timesTOD.entrySet()){
                         if(currentTime >= entry.getValue().getFirst() && currentTime <= entry.getValue().getSecond()){
@@ -82,14 +82,6 @@ public class City implements Serializable {
                 }
             }
         }
-
-
-
-
-
-
-
-
     }
 
     public final TimeOfDay getTimeOfDay(){
@@ -203,36 +195,39 @@ public class City implements Serializable {
     private void createTrips() {
         switch (getTimeOfDay()){
             // Very low traffic or no traffic ?
-            case night:
+            case NIGHT:
 
                 break;
 
-            case dusk:
+            case DUSK:
                 // R -> C
                 // R -> I
                 // R -> O
                 break;
 
-            case morning:
+            case MORNING:
                 // low traffic R -> R
                 // low traffic R -> C
 
-            case midday:
+            case MIDDAY:
                 // Medium traffic C -> C
                 // Medium traffic I -> C
                 // Medium traffic O -> C
                 // Medium traffic C -> C
                 // Medium traffic C -> I
                 // Medium traffic C -> O
+                break;
 
-            case afternoon:
+            case AFTERNOON:
                 // low traffic R -> R
                 // low traffic R -> C
+                break;
 
-            case dawn:
+            case DAWN:
                 // C -> R
                 // I -> R
                 // O -> R
+                break;
         }
         createHomeToShopTrip();
     }
@@ -288,5 +283,9 @@ public class City implements Serializable {
             Pair<Integer, Integer> nextPosition = p.getSecond();
             ((Road)grid[nextPosition.getFirst() * height + nextPosition.getSecond()]).addVehicle(p.getFirst());
         }
+    }
+
+    public List<Road> getRoads() {
+        return roads;
     }
 }
