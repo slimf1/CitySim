@@ -24,7 +24,7 @@ public class City implements Serializable {
     private int width;
     private int height;
     private TimeOfDay timeOfDay;
-    private HashMap<TimeOfDay, Pair<Integer, Integer>> timesTOD;
+    private HashMap<TimeOfDay, Pair<Integer, Integer>> timeBins;
 
     public City() {
         this(DEFAULT_WIDTH, DEFAULT_HEIGHT);
@@ -37,18 +37,17 @@ public class City implements Serializable {
         this.width = width;
         this.height = height;
         this.timeOfDay = TimeOfDay.DAWN;
+        this.timeBins = new HashMap<>();
 
         setupTimes();
     }
 
     private void setupTimes() {
-        timesTOD = new HashMap<>();
         int limits[] = { 4, 7, 12, 17, 22, 24 };
         int nBins = TimeOfDay.values().length;
         for(int i = 0; i < nBins; ++i) {
-            timesTOD.put(TimeOfDay.values()[i], new Pair<>(limits[i], limits[(i + 1) % nBins]));
+            timeBins.put(TimeOfDay.values()[i], new Pair<>(limits[i], limits[(i + 1) % nBins]));
         }
-        int a;
     }
 
     public Entity getEntityAt(int x, int y) {
@@ -69,13 +68,13 @@ public class City implements Serializable {
         int tickMax = Clock.TICK_MAX;
         int currentTime = Clock.getInstance().getTime();
         TimeOfDay newTOD = null;
-        if(this.timeOfDay == null || currentTime == timesTOD.get(TimeOfDay.NIGHT).getFirst() ){
+        if(this.timeOfDay == null || currentTime == timeBins.get(TimeOfDay.NIGHT).getFirst() ){
             this.timeOfDay = TimeOfDay.NIGHT;
         }
         else{
-            if(currentTime < timesTOD.get(TimeOfDay.NIGHT).getFirst()){
-                if(currentTime > timesTOD.get(timeOfDay).getSecond()){
-                    for(Map.Entry<TimeOfDay, Pair<Integer, Integer>> entry : timesTOD.entrySet()){
+            if(currentTime < timeBins.get(TimeOfDay.NIGHT).getFirst()){
+                if(currentTime > timeBins.get(timeOfDay).getSecond()){
+                    for(Map.Entry<TimeOfDay, Pair<Integer, Integer>> entry : timeBins.entrySet()){
                         if(currentTime >= entry.getValue().getFirst() && currentTime <= entry.getValue().getSecond()){
                             newTOD = entry.getKey();
                         }
