@@ -261,11 +261,10 @@ public class FxUserInterface extends Application {
                 gc.setFill(squarePaint);
                 gc.fillRect(x, y, SQUARE_LENGTH, SQUARE_LENGTH);
 
-                // If drawing a road
-                if(city.getEntityAt(i, j) instanceof Road){
-                    // Connecting roads
-                    drawConnectedRoads(i, j, gc);
-                }
+
+                // Try to connect roads
+                drawConnectedRoads(i, j, gc);
+
                 y += SQUARE_LENGTH;
             }
             x += SQUARE_LENGTH;
@@ -292,29 +291,32 @@ public class FxUserInterface extends Application {
         int x = i * SQUARE_LENGTH;
         int y = j * SQUARE_LENGTH;
 
-        // Road up
-        if(j-1 >= 0 && city.getEntityAt(i,j-1) instanceof Road){
-            connected = true;
-            gc.fillRect(x + 4 * roadPaint, y + 2 * roadPaint, 2 * roadPaint, 2 * roadPaint);
-        }
-        // Road down
-        if(j+1 < city.getHeight() && city.getEntityAt(i,j+1) instanceof Road){
-            connected = true;
-            gc.fillRect(x + 4 * roadPaint, y + 6 * roadPaint, 2 * roadPaint, 2 * roadPaint);
-        }
-        // Road left
-        if(i-1 >= 0 && city.getEntityAt(i-1,j) instanceof Road){
-            connected = true;
-            gc.fillRect(x + 2 * roadPaint, y + 4 * roadPaint, 2 * roadPaint, 2 * roadPaint);
-        }
-        // Road right
-        if(i+1 < city.getWidth() && city.getEntityAt(i+1,j) instanceof Road){
-            connected = true;
-            gc.fillRect(x + 6 * roadPaint, y + 4 * roadPaint, 2 * roadPaint, 2 * roadPaint);
-        }
+        // If drawing a road
+        if(city.getEntityAt(i, j) instanceof Road) {
+            // Road up
+            if (j - 1 >= 0 && city.getEntityAt(i, j - 1) instanceof Road) {
+                connected = true;
+                gc.fillRect(x + 4 * roadPaint, y + 2 * roadPaint, 2 * roadPaint, 2 * roadPaint);
+            }
+            // Road down
+            if (j + 1 < city.getHeight() && city.getEntityAt(i, j + 1) instanceof Road) {
+                connected = true;
+                gc.fillRect(x + 4 * roadPaint, y + 6 * roadPaint, 2 * roadPaint, 2 * roadPaint);
+            }
+            // Road left
+            if (i - 1 >= 0 && city.getEntityAt(i - 1, j) instanceof Road) {
+                connected = true;
+                gc.fillRect(x + 2 * roadPaint, y + 4 * roadPaint, 2 * roadPaint, 2 * roadPaint);
+            }
+            // Road right
+            if (i + 1 < city.getWidth() && city.getEntityAt(i + 1, j) instanceof Road) {
+                connected = true;
+                gc.fillRect(x + 6 * roadPaint, y + 4 * roadPaint, 2 * roadPaint, 2 * roadPaint);
+            }
 
-        if(connected){
-            gc.fillRect(x + 4 * roadPaint, y + 4 * roadPaint, 2 * roadPaint, 2 * roadPaint);
+            if (connected) {
+                gc.fillRect(x + 4 * roadPaint, y + 4 * roadPaint, 2 * roadPaint, 2 * roadPaint);
+            }
         }
     }
 
