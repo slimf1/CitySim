@@ -4,10 +4,10 @@ import com.isima.sma.entities.Entity;
 import com.isima.sma.entities.Road;
 import com.isima.sma.entities.Zone;
 import com.isima.sma.entities.ZoneType;
-import com.isima.sma.utils.Clock;
+import com.isima.sma.time.Clock;
 import com.isima.sma.utils.MTRandom;
 import com.isima.sma.utils.Pair;
-import com.isima.sma.utils.TimeOfDay;
+import com.isima.sma.time.TimeOfDay;
 import com.isima.sma.vehicles.Vehicle;
 
 import java.io.*;
@@ -38,15 +38,17 @@ public class City implements Serializable {
         this.height = height;
         this.timeOfDay = TimeOfDay.DAWN;
 
-        // Building period tools
-        float part = Clock.TICK_MAX / 30;
+        setupTimes();
+    }
+
+    private void setupTimes() {
         timesTOD = new HashMap<>();
-        timesTOD.putIfAbsent(TimeOfDay.DAWN, new Pair<Integer, Integer>((int)(4*part+1), (int)(6*part)));
-        timesTOD.putIfAbsent(TimeOfDay.MORNING, new Pair<Integer, Integer>((int)(6*part+1), (int)(12*part)));
-        timesTOD.putIfAbsent(TimeOfDay.MIDDAY, new Pair<Integer, Integer>((int)(12*part+1),(int) (17*part)));
-        timesTOD.putIfAbsent(TimeOfDay.AFTERNOON, new Pair<Integer, Integer>((int)(17*part+1), (int)(22*part)));
-        timesTOD.putIfAbsent(TimeOfDay.DUSK, new Pair<Integer, Integer>((int)(22*part+1), (int)(25*part)));
-        timesTOD.putIfAbsent(TimeOfDay.NIGHT, new Pair<Integer, Integer>((int)(25*part+1), (int)(4*part)));
+        int limits[] = { 4, 7, 12, 17, 22, 24 };
+        int nBins = TimeOfDay.values().length;
+        for(int i = 0; i < nBins; ++i) {
+            timesTOD.put(TimeOfDay.values()[i], new Pair<>(limits[i], limits[(i + 1) % nBins]));
+        }
+        int a;
     }
 
     public Entity getEntityAt(int x, int y) {

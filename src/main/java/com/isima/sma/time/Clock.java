@@ -1,4 +1,4 @@
-package com.isima.sma.utils;
+package com.isima.sma.time;
 
 public class Clock {
 
@@ -43,7 +43,7 @@ public class Clock {
         return this.time;
     }
 
-    void setTime(int t){
+    public void setTime(int t){
         this.time = t;
     }
 }

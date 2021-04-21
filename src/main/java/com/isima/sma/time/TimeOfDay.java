@@ -1,10 +1,10 @@
-package com.isima.sma.utils;
+package com.isima.sma.time;
 
 public enum TimeOfDay{
-    NIGHT,
     DAWN,
     MORNING,
     MIDDAY,
     AFTERNOON,
-    DUSK
+    DUSK,
+    NIGHT
 }
