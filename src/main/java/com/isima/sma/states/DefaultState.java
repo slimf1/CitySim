@@ -22,13 +22,15 @@ public class DefaultState implements RoadState, Serializable {
 
     @Override
     public void updateState(Road road) {
-        if (MTRandom.getInstance().nextDouble()
-                < (double)road.cost() / MAX_COST) {
+        if (road.cost() >0 && MTRandom.getInstance().nextDouble()
+                < Math.pow(((double)road.cost() / MAX_COST)+(double)road.getUsury() / MAX_USURY, 2)) {
+            System.out.println("Accident :\tcoût: " + road.cost() + "\tusure: "+road.getUsury() +"\tproba: " + Math.pow(((double)road.cost() / MAX_COST)+(double)road.getUsury() / MAX_USURY, 2));
             road.setState(new CarAccident());
             return;
         }
         if (MTRandom.getInstance().nextDouble()
-                < (double)road.getUsury() / MAX_USURY) {
+                < Math.pow((double)road.getUsury() / MAX_USURY, 2)) {
+            System.out.println("Travaux:\tusure: "+road.getUsury()+"\tproba: "+Math.pow((double)road.getUsury() / MAX_USURY, 2));
             road.setState(new RoadWorks(road.getUsury() / 3));
         }
     }
