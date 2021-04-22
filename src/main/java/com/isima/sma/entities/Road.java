@@ -9,6 +9,10 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
 
+/**
+ * Morceau de route
+ * @author Slimane F.
+ */
 public class Road extends Entity implements Iterable<Vehicle>, Comparable<Road> {
 
     private static final int MAX_COST = 10;
@@ -16,10 +20,10 @@ public class Road extends Entity implements Iterable<Vehicle>, Comparable<Road> 
 
     private static final long serialVersionUID = -2966220689110826407L;
 
-    private int usury;
-    private Queue<Vehicle> vehicles;
-    private RoadState state;
-    private boolean busStop;
+    private int usury;               // Usure de la route
+    private Queue<Vehicle> vehicles; // Les véhicules sur la route
+    private RoadState state;         // L'état de la route (pattern state)
+    private boolean busStop;         // Indique un arrêt de bus
 
     public Road(int x, int y) {
         super(x, y);
@@ -29,64 +33,136 @@ public class Road extends Entity implements Iterable<Vehicle>, Comparable<Road> 
         this.busStop = false;
     }
 
+    /**
+     * Indique si la route est dotée d'un
+     * arrêt de bus
+     * @return {@code true} si la route est un arrêt
+     * de bus, {@code false} sinon
+     */
     public final boolean isBusStop() {
         return busStop;
     }
 
+    /**
+     * Fixe un arrêt de bus sur la route
+     * @param busStop Le booléen qui indique s'il y a
+     *                un arrêt de bus sur la route
+     */
     public final void setBusStop(boolean busStop) {
         this.busStop = busStop;
     }
 
+    /**
+     * Fixe l'état d'une route
+     * @implNote Application du pattern state
+     * @param state Le nouvel état de la route
+     */
     public final void setState(RoadState state) {
         this.state = state;
     }
 
+    /**
+     * Ajoute un véhicule sur la route
+     * @param vehicle Le véhicle entrant
+     */
     public void addVehicle(Vehicle vehicle) {
         vehicles.add(vehicle);
         usury++;
     }
 
+    /**
+     * Retire un véhicule de la route
+     * @param vehicle Le véhicule à rétirer
+     */
     public void removeVehicle(Vehicle vehicle) {
         vehicles.remove(vehicle);
     }
 
+    /**
+     * Le coût de l'emprunt d'une route
+     * @return Le coût d'une route
+     */
     public Integer cost() {
         return state.updateCost(this, vehicles.size());
     }
 
+    /**
+     * L'usure d'une route
+     * @return La valeur de l'usure de la route
+     */
     public final int getUsury() {
         return usury;
     }
 
+    /**
+     * Fixe l'usure de la route
+     * @param usury La nouvelle valeur de l'usure
+     */
     public final void setUsury(int usury) {
         this.usury = usury;
     }
 
+    /**
+     * Spécifie que l'entité est une route
+     * @return {@code true}
+     */
+    @Override
+    public boolean isRoad() {
+        return true;
+    }
+
+    /**
+     * Représentation d'une route
+     * @return La représentation d'une route dans
+     * une chaîne
+     */
     @Override
     public String toString() {
         return String.format("Road [usury=%d, cost=%d]", usury, cost());
     }
 
+    /**
+     * L'itérateur pour une route. Permet
+     * d'itérer sur les différentes voitures
+     * qui la compose.
+     * @return L'itérateur des voitures de la route
+     */
     @Override
     public Iterator<Vehicle> iterator() {
         return vehicles.iterator();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String conRepresentation() {
         return cost().toString();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Paint fxRepresentation() {
         return state.getColor(this);
     }
 
+    /**
+     * Compare deux routes
+     * @param o L'autre route
+     * @return 1 si son coût est moins élevé,
+     * 0 si les coûts sont égaux,
+     * -1 sinon
+     */
     @Override
     public int compareTo(Road o) {
         return cost().compareTo(o.cost());
     }
 
+    /**
+     * Met à jour l'état de la route
+     */
     public void updateState() {
         state.updateState(this);
     }

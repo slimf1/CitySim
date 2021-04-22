@@ -4,8 +4,10 @@ import com.isima.sma.entities.Entity;
 import com.isima.sma.entities.Road;
 import com.isima.sma.entities.Zone;
 import com.isima.sma.entities.ZoneType;
+import com.isima.sma.time.Clock;
 import com.isima.sma.utils.MTRandom;
 import com.isima.sma.utils.Pair;
+import com.isima.sma.time.TimeOfDay;
 import com.isima.sma.vehicles.Vehicle;
 
 import java.io.*;
@@ -21,6 +23,8 @@ public class City implements Serializable {
     private Map<ZoneType, List<Zone>> zones;
     private int width;
     private int height;
+    private TimeOfDay timeOfDay;
+    private HashMap<TimeOfDay, Pair<Integer, Integer>> timeBins;
 
     public City() {
         this(DEFAULT_WIDTH, DEFAULT_HEIGHT);
@@ -32,6 +36,18 @@ public class City implements Serializable {
         this.zones = new HashMap<>();
         this.width = width;
         this.height = height;
+        this.timeOfDay = TimeOfDay.DAWN;
+        this.timeBins = new HashMap<>();
+
+        setupTimes();
+    }
+
+    private void setupTimes() {
+        int limits[] = { 4, 7, 12, 17, 22, 24 };
+        int nBins = TimeOfDay.values().length;
+        for(int i = 0; i < nBins; ++i) {
+            timeBins.put(TimeOfDay.values()[i], new Pair<>(limits[i], limits[(i + 1) % nBins]));
+        }
     }
 
     public Entity getEntityAt(int x, int y) {
@@ -46,6 +62,31 @@ public class City implements Serializable {
 
     public final int getHeight() {
         return height;
+    }
+
+    public final void setTimeOfDay(){
+        int tickMax = Clock.TICK_MAX;
+        int currentTime = Clock.getInstance().getTime();
+        TimeOfDay newTOD = null;
+        if(this.timeOfDay == null || currentTime == timeBins.get(TimeOfDay.NIGHT).getFirst() ){
+            this.timeOfDay = TimeOfDay.NIGHT;
+        }
+        else{
+            if(currentTime < timeBins.get(TimeOfDay.NIGHT).getFirst()){
+                if(currentTime > timeBins.get(timeOfDay).getSecond()){
+                    for(Map.Entry<TimeOfDay, Pair<Integer, Integer>> entry : timeBins.entrySet()){
+                        if(currentTime >= entry.getValue().getFirst() && currentTime <= entry.getValue().getSecond()){
+                            newTOD = entry.getKey();
+                        }
+                    }
+                    this.timeOfDay = newTOD;
+                }
+            }
+        }
+    }
+
+    public final TimeOfDay getTimeOfDay(){
+        return this.timeOfDay;
     }
 
     public boolean writeToFile(String filename) {
@@ -153,6 +194,42 @@ public class City implements Serializable {
     }
 
     private void createTrips() {
+        switch (getTimeOfDay()){
+            // Very low traffic or no traffic ?
+            case NIGHT:
+
+                break;
+
+            case DUSK:
+                // R -> C
+                // R -> I
+                // R -> O
+                break;
+
+            case MORNING:
+                // low traffic R -> R
+                // low traffic R -> C
+
+            case MIDDAY:
+                // Medium traffic C -> C
+                // Medium traffic I -> C
+                // Medium traffic O -> C
+                // Medium traffic C -> C
+                // Medium traffic C -> I
+                // Medium traffic C -> O
+                break;
+
+            case AFTERNOON:
+                // low traffic R -> R
+                // low traffic R -> C
+                break;
+
+            case DAWN:
+                // C -> R
+                // I -> R
+                // O -> R
+                break;
+        }
         createHomeToShopTrip();
     }
 
@@ -207,5 +284,9 @@ public class City implements Serializable {
             Pair<Integer, Integer> nextPosition = p.getSecond();
             ((Road)grid[nextPosition.getFirst() * height + nextPosition.getSecond()]).addVehicle(p.getFirst());
         }
+    }
+
+    public List<Road> getRoads() {
+        return roads;
     }
 }

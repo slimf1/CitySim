@@ -115,7 +115,7 @@ public class MTRandom extends Random {
 
     private final static MTRandom instance = new MTRandom();
 
-    public final static MTRandom getInstance() {
+    public static MTRandom getInstance() {
         return instance;
     }
 
