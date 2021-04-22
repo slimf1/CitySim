@@ -3,6 +3,8 @@ package com.isima.sma.states;
 import com.isima.sma.entities.Road;
 import com.isima.sma.utils.MTRandom;
 import javafx.scene.paint.Color;
+//import java.awt.Color;
+import sun.plugin.dom.css.RGBColor;
 
 import java.io.Serializable;
 
@@ -33,10 +35,25 @@ public class DefaultState implements RoadState, Serializable {
 
     @Override
     public Color getColor(Road road) {
-        Color baseColor = Color.BLACK;
-        int clampedCost = Math.max(0, Math.min(MAX_COST, road.cost()));
-        for(int i = 0; i < clampedCost; ++i)
-            baseColor = baseColor.brighter();
-        return baseColor;
+//        Color baseColor = Color.DEEPSKYBLUE;
+//        int clampedCost = Math.max(0, Math.min(MAX_COST, road.cost()));
+//        for(int i = 0; i < clampedCost; ++i)
+//            baseColor = baseColor.darker();
+
+        int [] costLevel = {0, 1, 3, 5, 8, 10, 15};
+        Color [] colorLevel = new Color[costLevel.length];
+        colorLevel[0] = Color.BLACK;
+//        for (int i=0; i < costLevel.length-1; i++){
+//            colorLevel[i+1] = Color.color(0.5+i/12, 0, i/20);
+//        }
+        for (int i=0; i < costLevel.length-1; i++){
+            colorLevel[i+1] = Color.hsb(0, 1, 0.5+i/12.0);
+        }
+        int i = 0;
+        while(i < costLevel.length && road.cost() > costLevel[i]){
+            i++;
+        }
+        return colorLevel[i];
+
     }
 }
