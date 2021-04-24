@@ -199,7 +199,6 @@ public class City implements Serializable {
         switch (getTimeOfDay()){
             // Very low traffic or no traffic ?
             case NIGHT:
-
                 break;
 
             case DAWN:
@@ -209,21 +208,20 @@ public class City implements Serializable {
                 // R -> I
                 // R -> O
                 createHomeToWorkTrip(2);
-
                 break;
-
-
 
             case AFTERNOON:
                 // low traffic R -> R
-
                 // low traffic R -> C
+                break;
+
             case MORNING:
                 // low traffic R -> R
                 createHomeToHomeTrip(1);
 
                 // low traffic R -> C
                 createHomeToShopTrip(1);
+                break;
 
             case MIDDAY:
                 // Medium traffic R -> C
@@ -248,10 +246,10 @@ public class City implements Serializable {
                 // I -> R
                 // O -> R
                 createWorkToHomeTrip(2);
-
                 break;
 
-
+            default:
+                // Nothing
         }
     }
 
@@ -289,7 +287,6 @@ public class City implements Serializable {
                 }
             }
         }
-
     }
 
     // HOME <-> SHOP
@@ -301,9 +298,7 @@ public class City implements Serializable {
         createTrip(ZoneType.COMMERCIAL, ZoneType.RESIDENTIAL, n);
     }
 
-
     // HOME <-> WORK
-
     private void createHomeToWorkTrip(int n) {
         createTrip(ZoneType.RESIDENTIAL, ZoneType.INDUSTRIAL, n);
         createTrip(ZoneType.RESIDENTIAL, ZoneType.OFFICE, n);
@@ -314,16 +309,12 @@ public class City implements Serializable {
         createTrip(ZoneType.INDUSTRIAL, ZoneType.RESIDENTIAL, n);
     }
 
-
     // HOME <-> HOME
-
     private void createHomeToHomeTrip(int n) {
         createTrip(ZoneType.RESIDENTIAL, ZoneType.RESIDENTIAL, n);
     }
 
-
     // SHOP <-> WORK
-
     private void createWorkToShopTrip(int n) {
         createTrip(ZoneType.OFFICE, ZoneType.COMMERCIAL, n);
         createTrip(ZoneType.INDUSTRIAL, ZoneType.COMMERCIAL, n);
@@ -334,9 +325,6 @@ public class City implements Serializable {
         createTrip(ZoneType.COMMERCIAL, ZoneType.OFFICE, n);
 
     }
-
-
-
 
     private void moveVehicles() {
         List<Pair<Vehicle, Pair<Integer, Integer>>> changes = new ArrayList<>();
@@ -349,7 +337,6 @@ public class City implements Serializable {
                 it.remove();
                 if (!vehicle.isAtDestination()) {
                     changes.add(new Pair<>(vehicle, vehicle.pollNextPosition()));
-                    // handles buses
                 }
             }
         }
