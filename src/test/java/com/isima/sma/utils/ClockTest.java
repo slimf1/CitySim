@@ -22,6 +22,11 @@ public class ClockTest {
 
     @Test
     public void formatTime() {
-
+        assertEquals("00:00", Clock.formatTime(0));
+        assertEquals("12:00", Clock.formatTime(Clock.TICK_MAX / 2));
+        assertEquals("08:00", Clock.formatTime(Clock.TICK_MAX / 3));
+        assertEquals("06:00", Clock.formatTime(Clock.TICK_MAX / 4));
+        assertEquals("00:40", Clock.formatTime(Clock.TICK_MAX / 36));
+        assertEquals("00:04", Clock.formatTime(1));
     }
 }

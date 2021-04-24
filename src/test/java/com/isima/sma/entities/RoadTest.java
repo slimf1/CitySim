@@ -1,6 +1,7 @@
 package com.isima.sma.entities;
 
 import com.isima.sma.states.CarAccident;
+import com.isima.sma.states.DefaultState;
 import com.isima.sma.vehicles.Vehicle;
 import org.junit.Test;
 
@@ -38,13 +39,19 @@ public class RoadTest {
 
     @Test
     public void conRepresentation() {
+        Road road = new Road(0, 0);
+        assertEquals("0", road.conRepresentation());
+        road.setState(new CarAccident());
+        assertTrue(Integer.parseInt(road.conRepresentation()) > 0);
     }
 
     @Test
     public void compareTo() {
-    }
-
-    @Test
-    public void updateState() {
+        Road r1 = new Road(0, 0);
+        Road r2 = new Road(0, 0);
+        r1.setState(new CarAccident());
+        assertTrue(r1.compareTo(r2) > 0);
+        r2.setState(new CarAccident());
+        assertEquals(0, r1.compareTo(r2));
     }
 }
