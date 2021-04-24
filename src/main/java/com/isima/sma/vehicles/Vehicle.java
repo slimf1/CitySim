@@ -2,6 +2,7 @@ package com.isima.sma.vehicles;
 
 import com.isima.sma.city.City;
 import com.isima.sma.strategies.BfsStrategy;
+import com.isima.sma.strategies.DijkstraStrategy;
 import com.isima.sma.strategies.PathingStrategy;
 import com.isima.sma.utils.Pair;
 
@@ -11,7 +12,8 @@ import java.util.Queue;
 
 public class Vehicle {
 
-    private static final PathingStrategy DEFAULT_PATHING_STRATEGY = new BfsStrategy();
+    //private static final PathingStrategy DEFAULT_PATHING_STRATEGY = new BfsStrategy();
+    private static final PathingStrategy DEFAULT_PATHING_STRATEGY = new DijkstraStrategy();
 
     private Queue<Pair<Integer, Integer>> path;
     private PathingStrategy pathingStrategy;

@@ -15,7 +15,15 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
 
+/**
+ * Stratégie de pathfinding utilisant l'algorithme de
+ * parcours en largeur
+ */
 public class BfsStrategy implements PathingStrategy {
+    /**
+     * {@inheritDoc}
+     * Implémentation par l'algorithme de parcours en largeur
+     */
     @Override
     public List<Pair<Integer, Integer>> createPath(City city, int xDep, int yDep, int xDest, int yDest) {
         if (!city.isRoad(xDep, yDep))

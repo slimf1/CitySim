@@ -1,6 +1,9 @@
 package com.isima.sma.time;
 
-
+/**
+ * Partie d'une journée
+ * @author Barthélemy J.
+ */
 public enum TimeOfDay {
     NIGHT(25, 4),
     DAWN(4, 6),

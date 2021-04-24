@@ -1,10 +1,15 @@
 package com.isima.sma.time;
 
+/**
+ * Horloge pour la gestion du temps
+ * dans l'application.
+ * @author Barthélemy J.
+ */
 public class Clock {
 
     public static final int TICK_MAX = 360;
 
-    private int time;
+    private int time; // Le nombre de ticks effectif
     private static final Clock instance = new Clock();
 
     private Clock(){
@@ -31,6 +36,10 @@ public class Clock {
         return String.format("%02d:%02d", hour, minutes);
     }
 
+    /**
+     * Incrémente le nombre de ticks
+     * @param incr Le nombre de ticks à incrémenter
+     */
     public void incrementTime(int incr){
         int t = getTime() + incr;
         if(t >= TICK_MAX){
@@ -39,10 +48,18 @@ public class Clock {
         setTime(t);
     }
 
+    /**
+     * Getter pour le nombre de ticks
+     * @return Le nombre de ticks
+     */
     public int getTime(){
         return this.time;
     }
 
+    /**
+     * Setter pour le nombre de ticks
+     * @param t Le nouveau nombre de ticks
+     */
     public void setTime(int t){
         this.time = t;
     }

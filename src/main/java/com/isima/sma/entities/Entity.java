@@ -6,7 +6,7 @@ import javafx.scene.paint.Paint;
 import java.io.Serializable;
 
 /**
- * Entité de la simulation
+ * Entité quelconque de la simulation
  * @author Slimane F.
  */
 public abstract class Entity implements Serializable {
