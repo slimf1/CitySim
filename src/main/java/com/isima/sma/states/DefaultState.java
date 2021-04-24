@@ -12,8 +12,8 @@ import java.io.Serializable;
  */
 public class DefaultState implements RoadState, Serializable {
 
-    private static final int MAX_COST = 80; // Le coût maximal d'une route
-    private static final int MAX_USURY = 1000; // L'usure maximale d'une route
+    private static final int MAX_COST = 100; // Le coût maximal d'une route
+    private static final int MAX_USURY = 50000; // L'usure maximale d'une route
 
     private static final long serialVersionUID = 7182582293063989705L;
 
@@ -31,7 +31,7 @@ public class DefaultState implements RoadState, Serializable {
     @Override
     public void updateState(Road road) {
         if (road.cost() >0 && MTRandom.getInstance().nextDouble()
-                < Math.pow(((double)road.cost() / MAX_COST)+(double)road.getUsury() / MAX_USURY, 3)) {
+                < Math.pow(((double)road.cost() / MAX_COST)+(double)road.getUsury() / MAX_USURY, 4)) {
             System.out.println("Accident :\tcoût: " + road.cost() + "\tusure: "+road.getUsury() +"\tproba: " + Math.pow(((double)road.cost() / MAX_COST)+(double)road.getUsury() / MAX_USURY, 2));
             road.setState(new CarAccident());
             return;
