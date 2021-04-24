@@ -52,10 +52,10 @@ public class DefaultState implements RoadState, Serializable {
             colorLevel[i+1] = Color.hsb(0, 1, 0.5+i/12.0);
         }
         int i = 0;
-        while(i < costLevel.length && road.cost() > costLevel[i]){
+        while(i < costLevel.length && road.cost() >= costLevel[i]){
             i++;
         }
-        return colorLevel[i];
+        return colorLevel[i-1];
 
     }
 }

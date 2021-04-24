@@ -36,17 +36,20 @@ public class City implements Serializable {
         this.zones = new HashMap<>();
         this.width = width;
         this.height = height;
-        this.timeOfDay = TimeOfDay.DAWN;
         this.timeBins = new HashMap<>();
 
         setupTimes();
+        setTimeOfDay();
     }
 
     private void setupTimes() {
-        int limits[] = { 4, 7, 12, 17, 22, 24 };
-        int nBins = TimeOfDay.values().length;
-        for(int i = 0; i < nBins; ++i) {
-            timeBins.put(TimeOfDay.values()[i], new Pair<>(limits[i], limits[(i + 1) % nBins]));
+        float part = Clock.TICK_MAX / 30;
+        for(int i = 0; i < TimeOfDay.values().length; ++i) {
+
+            int beginning = (int)(TimeOfDay.values()[i].getLower() * part + 1);
+            int end = (int)(TimeOfDay.values()[i].getUpper() * part);
+            System.out.println(TimeOfDay.values()[i].name() + " " + beginning + " " + end );
+            timeBins.put(TimeOfDay.values()[i], new Pair<>(beginning, end));
         }
     }
 
@@ -65,22 +68,21 @@ public class City implements Serializable {
     }
 
     public final void setTimeOfDay(){
-        int tickMax = Clock.TICK_MAX;
         int currentTime = Clock.getInstance().getTime();
         TimeOfDay newTOD = null;
         if(this.timeOfDay == null || currentTime == timeBins.get(TimeOfDay.NIGHT).getFirst() ){
             this.timeOfDay = TimeOfDay.NIGHT;
+            System.out.println(timeOfDay.name() + " " + currentTime);
         }
         else{
-            if(currentTime < timeBins.get(TimeOfDay.NIGHT).getFirst()){
-                if(currentTime > timeBins.get(timeOfDay).getSecond()){
-                    for(Map.Entry<TimeOfDay, Pair<Integer, Integer>> entry : timeBins.entrySet()){
-                        if(currentTime >= entry.getValue().getFirst() && currentTime <= entry.getValue().getSecond()){
-                            newTOD = entry.getKey();
-                        }
+            if(currentTime < timeBins.get(TimeOfDay.NIGHT).getFirst() && currentTime > timeBins.get(timeOfDay).getSecond()){
+                for(Map.Entry<TimeOfDay, Pair<Integer, Integer>> entry : timeBins.entrySet()){
+                    if(currentTime >= entry.getValue().getFirst() && currentTime <= entry.getValue().getSecond()){
+                        newTOD = entry.getKey();
                     }
-                    this.timeOfDay = newTOD;
                 }
+                this.timeOfDay = newTOD;
+                System.out.println(newTOD.name() + " " + currentTime);
             }
         }
     }
@@ -202,67 +204,132 @@ public class City implements Serializable {
 
             case DUSK:
                 // R -> C
+                createHomeToShopTrip(3);
+
                 // R -> I
                 // R -> O
+                createHomeToWorkTrip(2);
+
                 break;
 
-            case MORNING:
-                // low traffic R -> R
-                // low traffic R -> C
-
-            case MIDDAY:
-                // Medium traffic C -> C
-                // Medium traffic I -> C
-                // Medium traffic O -> C
-                // Medium traffic C -> C
-                // Medium traffic C -> I
-                // Medium traffic C -> O
-                break;
 
             case AFTERNOON:
                 // low traffic R -> R
+
                 // low traffic R -> C
+            case MORNING:
+                // low traffic R -> R
+                createHomeToHomeTrip(1);
+
+                // low traffic R -> C
+                createHomeToShopTrip(1);
+
+            case MIDDAY:
+                // Medium traffic R -> C
+                createHomeToShopTrip(2);
+
+                // Medium traffic I -> C
+                // Medium traffic O -> C
+                createWorkToShopTrip(1);
+
+                // Medium traffic C -> R
+                createShopToHomeTrip(2);
+
+                // Medium traffic C -> I
+                // Medium traffic C -> O
+                createShopToWorkTrip(1);
                 break;
+
 
             case DAWN:
                 // C -> R
+                createShopToHomeTrip(3);
+
                 // I -> R
                 // O -> R
+                createWorkToHomeTrip(2);
                 break;
         }
-        createHomeToShopTrip();
     }
 
-    private void createHomeToShopTrip() { // faire for resid
-        if (!zones.containsKey(ZoneType.RESIDENTIAL) || !zones.containsKey(ZoneType.COMMERCIAL)) return;
+    private void createTrip(ZoneType start, ZoneType destination, int n){
+        if (!zones.containsKey(start) || !zones.containsKey(destination)) return;
         Zone startingHome = zones
-                .get(ZoneType.RESIDENTIAL)
-                .get(MTRandom.getInstance().nextInt(zones.get(ZoneType.RESIDENTIAL).size()));
+                .get(start)
+                .get(MTRandom.getInstance().nextInt(zones.get(start).size()));
         Zone destinationShop = zones
-                .get(ZoneType.COMMERCIAL)
-                .get(MTRandom.getInstance().nextInt(zones.get(ZoneType.COMMERCIAL).size()));
+                .get(destination)
+                .get(MTRandom.getInstance().nextInt(zones.get(destination).size()));
+        for(int i = 0; i < n; i++){
+            try {
+                Pair<Integer, Integer> startingRoad = getAdjacentRoads(startingHome.getX(), startingHome.getY())
+                        .stream()
+                        .findFirst()
+                        .get();
 
-        try {
-            Pair<Integer, Integer> startingRoad = getAdjacentRoads(startingHome.getX(), startingHome.getY())
-                    .stream()
-                    .findFirst()
-                    .get();
+                Pair<Integer, Integer> destinationRoad = getAdjacentRoads(destinationShop.getX(), destinationShop.getY())
+                        .stream()
+                        .findFirst()
+                        .get();
 
-            Pair<Integer, Integer> destinationRoad = getAdjacentRoads(destinationShop.getX(), destinationShop.getY())
-                    .stream()
-                    .findFirst()
-                    .get();
+                Vehicle vehicle = new Vehicle();
+                vehicle.createPath(this, startingRoad.getFirst(), startingRoad.getSecond(),
+                        destinationRoad.getFirst(), destinationRoad.getSecond());
 
-            Vehicle vehicle = new Vehicle();
-            vehicle.createPath(this, startingRoad.getFirst(), startingRoad.getSecond(),
-                    destinationRoad.getFirst(), destinationRoad.getSecond());
-
-            ((Road)getEntityAt(startingRoad.getFirst(), startingRoad.getSecond())).addVehicle(vehicle);
-            //System.out.println("[DEBUG] Created path");
-        } catch (NoSuchElementException e) {
-            System.err.println("[DEBUG] tried to create path but failed");
+                ((Road)getEntityAt(startingRoad.getFirst(), startingRoad.getSecond())).addVehicle(vehicle);
+                //System.out.println("[DEBUG] Created path");
+            } catch (NoSuchElementException e) {
+                System.err.println("[DEBUG] tried to create path but failed");
+            }
         }
+
     }
+
+    // HOME <-> SHOP
+    private void createHomeToShopTrip(int n) {
+        createTrip(ZoneType.RESIDENTIAL, ZoneType.COMMERCIAL, n);
+    }
+
+    private void createShopToHomeTrip(int n) {
+        createTrip(ZoneType.COMMERCIAL, ZoneType.RESIDENTIAL, n);
+    }
+
+
+    // HOME <-> WORK
+
+    private void createHomeToWorkTrip(int n) {
+        createTrip(ZoneType.RESIDENTIAL, ZoneType.INDUSTRIAL, n);
+        createTrip(ZoneType.RESIDENTIAL, ZoneType.OFFICE, n);
+    }
+
+    private void createWorkToHomeTrip(int n) {
+        createTrip(ZoneType.OFFICE, ZoneType.RESIDENTIAL, n);
+        createTrip(ZoneType.INDUSTRIAL, ZoneType.RESIDENTIAL, n);
+    }
+
+
+    // HOME <-> HOME
+
+    private void createHomeToHomeTrip(int n) {
+        createTrip(ZoneType.RESIDENTIAL, ZoneType.RESIDENTIAL, n);
+    }
+
+
+    // SHOP <-> WORK
+
+    private void createWorkToShopTrip(int n) {
+        createTrip(ZoneType.OFFICE, ZoneType.COMMERCIAL, n);
+        createTrip(ZoneType.INDUSTRIAL, ZoneType.COMMERCIAL, n);
+    }
+
+    private void createShopToWorkTrip(int n) {
+        createTrip(ZoneType.COMMERCIAL, ZoneType.INDUSTRIAL, n);
+        createTrip(ZoneType.COMMERCIAL, ZoneType.OFFICE, n);
+
+    }
+
+
+
 
     private void moveVehicles() {
         List<Pair<Vehicle, Pair<Integer, Integer>>> changes = new ArrayList<>();
