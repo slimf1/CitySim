@@ -3,8 +3,6 @@ package com.isima.sma.states;
 import com.isima.sma.entities.Road;
 import com.isima.sma.utils.MTRandom;
 import javafx.scene.paint.Color;
-//import java.awt.Color;
-import sun.plugin.dom.css.RGBColor;
 
 import java.io.Serializable;
 
