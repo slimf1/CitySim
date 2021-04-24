@@ -5,12 +5,13 @@ package com.isima.sma.time;
  * @author Barthélemy J.
  */
 public enum TimeOfDay {
-    DAWN(4, 7),
-    MORNING(7, 12),
-    MIDDAY(12, 14),
-    AFTERNOON(14, 18),
-    DUSK(18, 21),
-    NIGHT(21, 4);
+    NIGHT(25, 4),
+    DAWN(4, 6),
+    MORNING(6, 12),
+    MIDDAY(12, 17),
+    AFTERNOON(17, 22),
+    DUSK(22, 25);
+
 
     private int lower;
     private int upper;
