@@ -17,6 +17,7 @@ public class City implements Serializable {
 
     private static final int DEFAULT_WIDTH = 15;
     private static final int DEFAULT_HEIGHT = 10;
+    private static final double SPAWN_PROBABILITY = 0.20;
 
     private Entity[] grid;
     private List<Road> roads;
@@ -83,7 +84,7 @@ public class City implements Serializable {
                 }
                 this.timeOfDay = newTOD;
                 System.out.println(newTOD.name() + " " + currentTime);
-                createTrips();
+
             }
         }
     }
@@ -193,9 +194,14 @@ public class City implements Serializable {
 
     public void step() {
         moveVehicles();
+        if(Clock.getInstance().getTime() % 2 == 0){
+            createTrips();
+        }
     }
 
     private void createTrips() {
+
+
         switch (getTimeOfDay()){
             // Very low traffic or no traffic ?
             case NIGHT:
@@ -203,17 +209,16 @@ public class City implements Serializable {
 
             case DAWN:
                 // R -> C
-                createHomeToShopTrip(3);
+                createHomeToShopTrip(4);
 
                 // R -> I
                 // R -> O
-                createHomeToWorkTrip(2);
+                createHomeToWorkTrip(3);
                 break;
 
             case AFTERNOON:
                 // low traffic R -> R
                 // low traffic R -> C
-                break;
 
             case MORNING:
                 // low traffic R -> R
@@ -241,11 +246,11 @@ public class City implements Serializable {
 
             case DUSK:
                 // C -> R
-                createShopToHomeTrip(3);
+                createShopToHomeTrip(4);
 
                 // I -> R
                 // O -> R
-                createWorkToHomeTrip(2);
+                createWorkToHomeTrip(3);
                 break;
 
             default:
@@ -265,26 +270,29 @@ public class City implements Serializable {
 
 
             for(int i = 0; i < n; i++){
-                try {
-                    Pair<Integer, Integer> startingRoad = getAdjacentRoads(startingHome.getX(), startingHome.getY())
-                            .stream()
-                            .findFirst()
-                            .get();
+                if(MTRandom.getInstance().nextDouble() < SPAWN_PROBABILITY){
+                    try {
+                        Pair<Integer, Integer> startingRoad = getAdjacentRoads(startingHome.getX(), startingHome.getY())
+                                .stream()
+                                .findFirst()
+                                .get();
 
-                    Pair<Integer, Integer> destinationRoad = getAdjacentRoads(destinationShop.getX(), destinationShop.getY())
-                            .stream()
-                            .findFirst()
-                            .get();
+                        Pair<Integer, Integer> destinationRoad = getAdjacentRoads(destinationShop.getX(), destinationShop.getY())
+                                .stream()
+                                .findFirst()
+                                .get();
 
-                    Vehicle vehicle = new Vehicle();
-                    vehicle.createPath(this, startingRoad.getFirst(), startingRoad.getSecond(),
-                            destinationRoad.getFirst(), destinationRoad.getSecond());
+                        Vehicle vehicle = new Vehicle();
+                        vehicle.createPath(this, startingRoad.getFirst(), startingRoad.getSecond(),
+                                destinationRoad.getFirst(), destinationRoad.getSecond());
 
-                    ((Road)getEntityAt(startingRoad.getFirst(), startingRoad.getSecond())).addVehicle(vehicle);
-                    //System.out.println("[DEBUG] Created path");
-                } catch (NoSuchElementException e) {
-                    System.err.println("[DEBUG] tried to create path but failed");
+                        ((Road)getEntityAt(startingRoad.getFirst(), startingRoad.getSecond())).addVehicle(vehicle);
+                        //System.out.println("[DEBUG] Created path");
+                    } catch (NoSuchElementException e) {
+                        System.err.println("[DEBUG] tried to create path but failed");
+                    }
                 }
+
             }
         }
     }
