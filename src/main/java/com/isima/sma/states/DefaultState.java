@@ -8,18 +8,28 @@ import sun.plugin.dom.css.RGBColor;
 
 import java.io.Serializable;
 
+/**
+ * L'état par défaut d'une route. Ne donne pas lieu
+ * à d'effets particuliers.
+ */
 public class DefaultState implements RoadState, Serializable {
 
-    private static final int MAX_COST = 80;
-    private static final int MAX_USURY = 1000;
+    private static final int MAX_COST = 80; // Le coût maximal d'une route
+    private static final int MAX_USURY = 1000; // L'usure maximale d'une route
 
     private static final long serialVersionUID = 7182582293063989705L;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int updateCost(Road road, int initialCost) {
         return initialCost;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void updateState(Road road) {
         if (road.cost() >0 && MTRandom.getInstance().nextDouble()
@@ -35,19 +45,14 @@ public class DefaultState implements RoadState, Serializable {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Color getColor(Road road) {
-//        Color baseColor = Color.DEEPSKYBLUE;
-//        int clampedCost = Math.max(0, Math.min(MAX_COST, road.cost()));
-//        for(int i = 0; i < clampedCost; ++i)
-//            baseColor = baseColor.darker();
-
         int [] costLevel = {0, 1, 3, 5, 8, 10, 15};
         Color [] colorLevel = new Color[costLevel.length];
         colorLevel[0] = Color.BLACK;
-//        for (int i=0; i < costLevel.length-1; i++){
-//            colorLevel[i+1] = Color.color(0.5+i/12, 0, i/20);
-//        }
         for (int i=0; i < costLevel.length-1; i++){
             colorLevel[i+1] = Color.hsb(0, 1, 0.5+i/12.0);
         }
@@ -56,6 +61,5 @@ public class DefaultState implements RoadState, Serializable {
             i++;
         }
         return colorLevel[i];
-
     }
 }

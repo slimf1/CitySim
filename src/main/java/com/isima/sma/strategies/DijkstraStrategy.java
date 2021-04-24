@@ -6,7 +6,16 @@ import com.isima.sma.utils.Pair;
 
 import java.util.*;
 
+/**
+ * Stratégie de pathfinding utilisant l'algorithme
+ * de Dijkstra
+ * @author Slimane F.
+ */
 public class DijkstraStrategy implements PathingStrategy {
+    /**
+     * {@inheritDoc}
+     * Implémentation par l'algorithme de Dijkstra
+     */
     @Override
     public List<Pair<Integer, Integer>> createPath(City city, int xDep, int yDep, int xDest, int yDest) {
         if (!city.isRoad(xDep, yDep))

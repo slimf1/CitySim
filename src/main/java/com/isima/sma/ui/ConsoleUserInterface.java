@@ -9,6 +9,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+/**
+ * Interface console de la simulation
+ */
 public class ConsoleUserInterface {
 
     private City city;
@@ -17,6 +20,9 @@ public class ConsoleUserInterface {
         this.city = new City(10, 5);
     }
 
+    /**
+     * Démarre le REPL
+     */
     public void start() {
         boolean keep = true;
         while (keep) {
@@ -35,6 +41,11 @@ public class ConsoleUserInterface {
         }
     }
 
+    /**
+     * Représentation de la ville sous forme de tableau
+     * pour l'affichage console
+     * @return La représentation console de la ville
+     */
     private String cityConsoleRepresentation() {
         StringBuilder builder = new StringBuilder();
         for(int y = 0; y < city.getHeight(); ++y) {
@@ -49,6 +60,10 @@ public class ConsoleUserInterface {
         return builder.toString();
     }
 
+    /**
+     * Lecture d'une commande utilisateur
+     * @param userResponse La commande entrée par l'utilisateur
+     */
     private void parseUserResponse(String userResponse) {
         String[] params = userResponse.split(" ");
 
@@ -101,6 +116,10 @@ public class ConsoleUserInterface {
         }
     }
 
+    /**
+     * Affiche l'aide (la liste des commandes
+     * disponibles) dans la sortie standard.
+     */
     private void showHelp() {
         System.out.println("-- CitySim : Console UI --\n" +
                 "set {x} {y} {type} - Add an element to the city (Road, Zone)\n" +
@@ -108,6 +127,11 @@ public class ConsoleUserInterface {
                 "quit - Quit the program\n");
     }
 
+    /**
+     * Lecture d'une commande de l'utilisateur et
+     * gestion des erreurs.
+     * @return La réponse de l'utilisateur
+     */
     private String readConsole() {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         System.out.print("> ");
