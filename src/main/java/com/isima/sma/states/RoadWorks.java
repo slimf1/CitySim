@@ -13,7 +13,7 @@ import java.io.Serializable;
  * de la route.
  * @author Slimane F.
  */
-public class RoadWorks implements RoadState, Serializable {
+public class RoadWorks implements RoadState {
 
     /**
      * La durée par défaut des travaux

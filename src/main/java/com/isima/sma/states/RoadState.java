@@ -3,12 +3,14 @@ package com.isima.sma.states;
 import com.isima.sma.entities.Road;
 import javafx.scene.paint.Color;
 
+import java.io.Serializable;
+
 /**
  * Représente un état d'une route.
  * Application du design pattern State.
  * @author Slimane F.
  */
-public interface RoadState {
+public interface RoadState extends Serializable {
     /**
      * Coût effectif d'une route en fonction
      * de son état

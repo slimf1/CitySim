@@ -11,7 +11,7 @@ import java.io.Serializable;
  * à d'effets particuliers.
  * @author Slimane F.
  */
-public class DefaultState implements RoadState, Serializable {
+public class DefaultState implements RoadState {
 
     /**
      * Le coût maximal pour le calcul des probabilités

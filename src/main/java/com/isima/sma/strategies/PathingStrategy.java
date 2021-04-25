@@ -10,7 +10,7 @@ import java.util.List;
  * véhicules de la simulation
  * @author Slimane F.
  */
-public interface PathingStrategy {
+public interface PathingStrategy extends java.io.Serializable {
     /**
      * Créé un chemin entre deux points de la ville.
      * @param city La ville

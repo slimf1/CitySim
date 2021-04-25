@@ -10,7 +10,7 @@ import java.io.Serializable;
  * Augmente son coût de façon importante.
  * @author Slimane F.
  */
-public class CarAccident implements RoadState, Serializable {
+public class CarAccident implements RoadState {
 
     /**
      * La durée par défaut d'un accident
