@@ -57,6 +57,11 @@ public class City implements Serializable {
      */
     private int height;
     /**
+     * L'horloge de la ville
+     */
+    private Clock clock;
+
+    /**
      * La période actuelle de la simulation
      */
     private TimeOfDay timeOfDay;
@@ -86,7 +91,7 @@ public class City implements Serializable {
         this.width = width;
         this.height = height;
         this.timeBins = new HashMap<>();
-
+        this.clock = new Clock();
         setupTimes();
         setTimeOfDay();
     }
@@ -133,10 +138,18 @@ public class City implements Serializable {
     }
 
     /**
+     * @return L'horloge de la ville
+     */
+    public Clock getClock(){
+        return clock;
+    }
+
+
+    /**
      * Fixe la période de la journée
      */
     public final void setTimeOfDay() {
-        int currentTime = Clock.getInstance().getTime();
+        int currentTime = clock.getTime();
         TimeOfDay newTOD = null;
         if(this.timeOfDay == null || currentTime == timeBins.get(TimeOfDay.NIGHT).getFirst() ){
             this.timeOfDay = TimeOfDay.NIGHT;
@@ -314,7 +327,7 @@ public class City implements Serializable {
      */
     public void step() {
         moveVehicles();
-        if(Clock.getInstance().getTime() % 2 == 0){
+        if(clock.getTime() % 2 == 0){
             createTrips();
         }
     }
