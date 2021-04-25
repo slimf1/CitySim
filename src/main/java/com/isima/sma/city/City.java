@@ -367,8 +367,8 @@ public class City implements Serializable {
                 break;
 
             case DUSK:
-                createShopToHomeTrip(5);
-                createWorkToHomeTrip(4);
+                createShopToHomeTrip(6);
+                createWorkToHomeTrip(6);
                 break;
 
             default:
@@ -411,9 +411,7 @@ public class City implements Serializable {
                                 destinationRoad.getFirst(), destinationRoad.getSecond());
 
                         ((Road)getEntityAt(startingRoad.getFirst(), startingRoad.getSecond())).addVehicle(vehicle);
-                    } catch (NoSuchElementException e) {
-                        System.err.println("[DEBUG] tried to create path but failed");
-                    }
+                    } catch (NoSuchElementException e) {}
                 }
 
             }
