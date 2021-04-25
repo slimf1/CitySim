@@ -216,6 +216,8 @@ public class FxUserInterface extends Application {
      * @param mouseEvent L'event du click
      */
     private void handleMouseClicked(MouseEvent mouseEvent) {
+        if (autoPlayTimer != null) return; // Pas d'ajout si simu en cours
+
         int column = (int)mouseEvent.getX() / SQUARE_LENGTH;
         int row = (int)mouseEvent.getY() / SQUARE_LENGTH;
         boolean redraw = false;
