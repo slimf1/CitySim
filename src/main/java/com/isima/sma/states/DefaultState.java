@@ -38,7 +38,7 @@ public class DefaultState implements RoadState {
     @Override
     public void updateState(Road road) {
         if (road.cost() >0 && MTRandom.getInstance().nextDouble()
-                < Math.pow(((double)road.cost() / MAX_COST)+(double)road.getUsury() / MAX_USURY, 3)) {
+                < Math.pow(((double)road.cost() / MAX_COST)+ 0.6 * (double)road.getUsury() / MAX_USURY, 3)) {
             road.setState(new CarAccident());
             return;
         }
