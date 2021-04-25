@@ -176,6 +176,7 @@ public class FxUserInterface extends Application {
             if (file != null) {
                 city = City.loadFromFile(file.getPath());
                 drawCity(cityCanvas.getGraphicsContext2D());
+                drawClock();
             }
         });
 
