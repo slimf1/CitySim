@@ -20,7 +20,7 @@ public class DefaultState implements RoadState, Serializable {
     /**
      * L'usure maximale pour le calcul des probabilités
      */
-    private static final int MAX_USURY = 50000;
+    private static final int MAX_USURY = 3000;
 
     private static final long serialVersionUID = 7182582293063989705L;
 
@@ -57,16 +57,14 @@ public class DefaultState implements RoadState, Serializable {
     public Color getColor(Road road) {
 
         int [] costLevel = {0, 1, 3, 5, 8, 10, 15};
-        Color [] colorLevel = new Color[costLevel.length];
-        colorLevel[0] = Color.BLACK;
-        for (int i=0; i < costLevel.length-1; i++){
-            colorLevel[i+1] = Color.hsb(0, 1, 0.5+i/12.0);
-        }
         int i = 0;
         while(i < costLevel.length && road.cost() >= costLevel[i]){
             i++;
         }
-        return colorLevel[i-1];
+        if(i==1){
+            return Color.BLACK;
+        }
+        return Color.hsb(0, 1, 0.5+(i-1)/12.0);
 
     }
 }
