@@ -1,11 +1,13 @@
 package com.isima.sma.time;
 
+import java.io.Serializable;
+
 /**
  * Horloge pour la gestion du temps
  * dans l'application.
  * @author Barthélemy J.
  */
-public class Clock {
+public class Clock implements Serializable {
 
     /**
      * Le nombre de ticks total dans une journée
@@ -17,23 +19,12 @@ public class Clock {
      */
     private int time;
 
-    /**
-     * L'instance de l'horloge (pattern singleton)
-     */
-    private static final Clock instance = new Clock();
 
     /**
      * Constructeur d'une horloge
      */
-    private Clock(){
+    public Clock(){
         time = 0;
-    }
-
-    /**
-     * @return L'instance de l'horloge (pattern singleton)
-     */
-    public static Clock getInstance(){
-        return instance;
     }
 
     /**

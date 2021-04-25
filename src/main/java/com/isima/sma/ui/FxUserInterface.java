@@ -203,7 +203,7 @@ public class FxUserInterface extends Application {
      * @param event L'évènement de la souris
      */
     private void onClockMouseMoved(MouseEvent event) {
-        int ticks = Clock.getInstance().getTime();
+        int ticks = city.getClock().getTime();
         String timestamp = Clock.formatTime(ticks);
         hoverLabel.setText(timestamp);
     }
@@ -214,7 +214,7 @@ public class FxUserInterface extends Application {
     private void stepAndRedraw() {
         city.step();
         drawCity(cityCanvas.getGraphicsContext2D());
-        Clock.getInstance().incrementTime(1);
+        city.getClock().incrementTime(1);
         city.setTimeOfDay();
         drawClock();
     }
@@ -301,7 +301,7 @@ public class FxUserInterface extends Application {
      * Dessine l'horloge
      */
     public void drawClock() {
-        double angle = - 2 * Math.PI * ((double)Clock.getInstance().getTime() / Clock.TICK_MAX);
+        double angle = - 2 * Math.PI * ((double)city.getClock().getTime() / Clock.TICK_MAX);
         int x = CLOCK_X - (int)(CLOCK_R * Math.sin(angle));
         int y = CLOCK_Y - (int)(CLOCK_R * Math.cos(angle));
         int index = controlPanel.getChildren().indexOf(clockGroup);

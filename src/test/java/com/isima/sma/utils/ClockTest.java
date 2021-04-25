@@ -8,16 +8,18 @@ public class ClockTest {
 
     @Test
     public void testIncrClock(){
-        int oldValue = Clock.getInstance().getTime();
-        Clock.getInstance().incrementTime(10);
-        assertEquals(oldValue + 10, Clock.getInstance().getTime());
+        Clock clock = new Clock();
+        int oldValue = clock.getTime();
+        clock.incrementTime(10);
+        assertEquals(oldValue + 10, clock.getTime());
     }
 
     @Test
     public void testSetClock(){
+        Clock clock = new Clock();
         int newValue = 3;
-        Clock.getInstance().setTime(3);
-        assertEquals(newValue, Clock.getInstance().getTime());
+        clock.setTime(3);
+        assertEquals(newValue, clock.getTime());
     }
 
     @Test
