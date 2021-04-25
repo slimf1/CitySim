@@ -9,7 +9,7 @@ import java.util.Objects;
  * @param <T1> Le type du premier élément
  * @param <T2> Le type du second élément
  */
-public final class Pair<T1, T2> {
+public final class Pair<T1, T2> implements java.io.Serializable {
 
     private final T1 first; // Le premier élément
     private final T2 second; // Le second élément

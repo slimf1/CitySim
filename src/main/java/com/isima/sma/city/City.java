@@ -369,9 +369,9 @@ public class City implements Serializable {
      * @param destination Le type de zone du point d'arrivée
      * @param n Le nombre de trajets maximum à créer
      */
-    private void createTrip(ZoneType start, ZoneType destination, int n){
+    private void createTrip(ZoneType start, ZoneType destination, int n) {
+        if (!zones.containsKey(start) || !zones.containsKey(destination)) return;
         for (Entity ent : zones.get(start)){
-            if (!zones.containsKey(start) || !zones.containsKey(destination)) return;
             Zone startingHome = zones
                     .get(start)
                     .get(MTRandom.getInstance().nextInt(zones.get(start).size()));
