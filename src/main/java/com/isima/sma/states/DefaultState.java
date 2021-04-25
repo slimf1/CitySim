@@ -46,7 +46,7 @@ public class DefaultState implements RoadState {
         if (MTRandom.getInstance().nextDouble()
                 < Math.pow((double)road.getUsury() / MAX_USURY, 3)) {
             System.out.println("Travaux:\tusure: "+road.getUsury()+"\tproba: "+Math.pow((double)road.getUsury() / MAX_USURY, 2));
-            road.setState(new RoadWorks(road.getUsury() / 3));
+            road.setState(new RoadWorks(road.getUsury() / (MAX_USURY/ 40)));
         }
     }
 
