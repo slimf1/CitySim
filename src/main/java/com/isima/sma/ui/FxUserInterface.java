@@ -160,14 +160,14 @@ public class FxUserInterface extends Application {
 
         MenuBar menuBar = new MenuBar();
         Menu viewMenu = new Menu("File");
-        RadioMenuItem zoneItem = new RadioMenuItem("Opt1");
-        zoneItem.setOnAction(e -> System.out.println("temp"));
-        RadioMenuItem vehiclesItem = new RadioMenuItem("Opt2");
-        vehiclesItem.setOnAction(e -> System.out.println("temp"));
+        MenuItem zoneItem = new MenuItem("Sauvegarder");
+        zoneItem.setOnAction(e -> city.writeToFile("file"));
+        MenuItem vehiclesItem = new MenuItem("Charger");
+        vehiclesItem.setOnAction(e -> city.loadFromFile("file"));
 
-        ToggleGroup toggleGroup = new ToggleGroup();
-        toggleGroup.getToggles().add(zoneItem);
-        toggleGroup.getToggles().add(vehiclesItem);
+//        ToggleGroup toggleGroup = new ToggleGroup();
+//        toggleGroup.getToggles().add(zoneItem);
+//        toggleGroup.getToggles().add(vehiclesItem);
 
         viewMenu.getItems().add(zoneItem);
         viewMenu.getItems().add(vehiclesItem);
