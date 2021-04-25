@@ -5,6 +5,7 @@ import javafx.scene.paint.Paint;
 
 /**
  * Le type d'une zone de la ville
+ * @author Slimane F.
  */
 public enum ZoneType {
     RESIDENTIAL(Color.GREEN),
@@ -12,12 +13,19 @@ public enum ZoneType {
     INDUSTRIAL(Color.YELLOW),
     OFFICE(Color.CYAN);
 
+    /**
+     * Représentation graphique du type
+     */
     private Paint paint;
 
     ZoneType(Paint paint) {
         this.paint = paint;
     }
 
+    /**
+     * Retourne la représentation graphique du type
+     * @return La représentation graphique du type
+     */
     public Paint getPaint() {
         return paint;
     }

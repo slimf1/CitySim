@@ -11,11 +11,18 @@ import java.io.InputStreamReader;
 
 /**
  * Interface console de la simulation
+ * @author Slimane F.
  */
 public class ConsoleUserInterface {
 
+    /**
+     * L'instance de la ville
+     */
     private City city;
 
+    /**
+     * Constructeur de l'interface console
+     */
     public ConsoleUserInterface() {
         this.city = new City(10, 5);
     }

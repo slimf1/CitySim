@@ -6,6 +6,7 @@ import javafx.scene.paint.Color;
 /**
  * Représente un état d'une route.
  * Application du design pattern State.
+ * @author Slimane F.
  */
 public interface RoadState {
     /**

@@ -5,6 +5,7 @@ import java.util.Objects;
 /**
  * Représente un couple d'objets
  * quelconques
+ * @author Slimane F.
  * @param <T1> Le type du premier élément
  * @param <T2> Le type du second élément
  */

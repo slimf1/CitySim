@@ -27,6 +27,10 @@ import javafx.stage.Stage;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * Interface graphique de l'application
+ * @author Slimane F. et Barthélemy J.
+ */
 public class FxUserInterface extends Application {
 
     private static final int SQUARE_LENGTH = 20;
@@ -55,22 +59,14 @@ public class FxUserInterface extends Application {
         this.controlPanel = new VBox();
         hoverLabel.setPadding(new Insets(3, 0, 0, 0));
         root.setBottom(hoverLabel);
-
-        // Methodes pour "stepAndRedraw()" et infos (labels attr)
-        // + methodes (getRandomHouseStartingPoint) (GetRandomStartingPoint (ZoneType Type) (appeler forall?) idk
-        // Dijsktra ?
     }
 
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setScene(new Scene(root));
-
-        // City canvas | class RoadNetwork (grid etc)
-        //Canvas canvas = new Canvas(city.getWidth() * SQUARE_LENGTH, city.getHeight() * SQUARE_LENGTH);
         cityCanvas.setOnMouseClicked(this::handleMouseClicked);
         cityCanvas.setOnMouseMoved(this::handleMouseMoved);
         GraphicsContext gc = cityCanvas.getGraphicsContext2D();
-        //gc.fillRect(bounds.getMinX(), bounds.getMinY(), bounds.getWidth(), bounds.getHeight());
 
         drawCity(gc);
 
@@ -83,7 +79,6 @@ public class FxUserInterface extends Application {
         root.setCenter(cityCanvas);
 
         // Group
-
         Label titleLabel = new Label("CitySim");
         titleLabel.setFont(new Font("Arial", 30));
         titleLabel.setTextFill(Color.web("#0076a3"));
@@ -104,7 +99,6 @@ public class FxUserInterface extends Application {
         clockGroup.getChildren().add(clockCircle);
         clockGroup.getChildren().add(clockTick);
         controlPanel.getChildren().add(clockGroup);
-
         // End Clock
 
         Label zonesLabel = new Label("Zones");
@@ -164,8 +158,6 @@ public class FxUserInterface extends Application {
         controlPanel.setPadding(new Insets(10));
         root.setRight(controlPanel);
 
-        // + hover => info
-        // Menu bar
         MenuBar menuBar = new MenuBar();
         Menu viewMenu = new Menu("File");
         RadioMenuItem zoneItem = new RadioMenuItem("Opt1");
@@ -189,7 +181,6 @@ public class FxUserInterface extends Application {
     /**
      * Met à jour le label d'information quand on
      * survole l'horloge
-     * @author Slimane F.
      * @param event L'évènement de la souris
      */
     private void onClockMouseMoved(MouseEvent event) {
@@ -198,6 +189,9 @@ public class FxUserInterface extends Application {
         hoverLabel.setText(timestamp);
     }
 
+    /**
+     * Applique une étape et redessine la ville
+     */
     private void stepAndRedraw() {
         city.step();
         drawCity(cityCanvas.getGraphicsContext2D());
@@ -206,6 +200,10 @@ public class FxUserInterface extends Application {
         drawClock();
     }
 
+    /**
+     * Gestion d'un click sur le canvas
+     * @param mouseEvent L'event du click
+     */
     private void handleMouseClicked(MouseEvent mouseEvent) {
         int column = (int)mouseEvent.getX() / SQUARE_LENGTH;
         int row = (int)mouseEvent.getY() / SQUARE_LENGTH;
@@ -240,12 +238,22 @@ public class FxUserInterface extends Application {
         }
     }
 
+    /**
+     * Gère le survol des éléments du canvas.
+     * Fixe la valeur du label d'information en bas
+     * du label
+     * @param mouseEvent L'event de survol
+     */
     private void handleMouseMoved(MouseEvent mouseEvent) {
         int column = (int)mouseEvent.getX() / SQUARE_LENGTH;
         int row = (int)mouseEvent.getY() / SQUARE_LENGTH;
         hoverLabel.setText("(" + column + ", " + row + ") " + city.getEntityAt(column, row));
     }
 
+    /**
+     * Dessine la ville sur le canvas
+     * @param gc Le contexte graphique 2D
+     */
     public void drawCity(GraphicsContext gc) {
         int x = 0;
         int y;
@@ -270,7 +278,10 @@ public class FxUserInterface extends Application {
         }
     }
 
-    public void drawClock(){
+    /**
+     * Dessine l'horloge
+     */
+    public void drawClock() {
         double angle = - 2 * Math.PI * ((double)Clock.getInstance().getTime() / Clock.TICK_MAX);
         int x = CLOCK_X - (int)(CLOCK_R * Math.sin(angle));
         int y = CLOCK_Y - (int)(CLOCK_R * Math.cos(angle));
@@ -283,6 +294,12 @@ public class FxUserInterface extends Application {
         }
     }
 
+    /**
+     * Dessine les détails sur les routes
+     * @param i La ligne de la route
+     * @param j La colonne de la route
+     * @param gc Le contexte graphique 2D
+     */
     private void drawConnectedRoads(int i, int j, GraphicsContext gc) {
         boolean connected = false;
         gc.setFill(Color.WHITE);
@@ -318,5 +335,4 @@ public class FxUserInterface extends Application {
             }
         }
     }
-
 }

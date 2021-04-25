@@ -8,7 +8,10 @@ import javafx.scene.paint.Paint;
  */
 public class Zone extends Entity {
 
-    private ZoneType zoneType; // Type de la zone
+    /**
+     * Type de la zone
+     */
+    private ZoneType zoneType;
 
     /**
      * Constructeur d'une zone

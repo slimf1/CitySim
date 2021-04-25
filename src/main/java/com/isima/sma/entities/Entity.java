@@ -13,9 +13,20 @@ public abstract class Entity implements Serializable {
 
     private static final long serialVersionUID = 7808675342380405440L;
 
+    /**
+     * L'abscisse du point de l'entité
+     */
     private final int x;
+    /**
+     * L'ordonnée du point de l'entité
+     */
     private final int y;
 
+    /**
+     * Constructeur d'une entité
+     * @param x L'abscisse du point de l'entité
+     * @param y L'ordonnée du point de l'entité
+     */
     public Entity(int x, int y) {
         this.x = x;
         this.y = y;

@@ -8,6 +8,7 @@ import java.util.List;
 /**
  * Stratégie de pathfinding pour les
  * véhicules de la simulation
+ * @author Slimane F.
  */
 public interface PathingStrategy {
     /**

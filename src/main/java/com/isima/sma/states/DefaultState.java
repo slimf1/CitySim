@@ -9,11 +9,18 @@ import java.io.Serializable;
 /**
  * L'état par défaut d'une route. Ne donne pas lieu
  * à d'effets particuliers.
+ * @author Slimane F.
  */
 public class DefaultState implements RoadState, Serializable {
 
-    private static final int MAX_COST = 100; // Le coût maximal d'une route
-    private static final int MAX_USURY = 50000; // L'usure maximale d'une route
+    /**
+     * Le coût maximal pour le calcul des probabilités
+     */
+    private static final int MAX_COST = 100;
+    /**
+     * L'usure maximale pour le calcul des probabilités
+     */
+    private static final int MAX_USURY = 50000;
 
     private static final long serialVersionUID = 7182582293063989705L;
 

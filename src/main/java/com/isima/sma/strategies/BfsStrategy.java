@@ -18,6 +18,7 @@ import java.util.Set;
 /**
  * Stratégie de pathfinding utilisant l'algorithme de
  * parcours en largeur
+ * @author Slimane F.
  */
 public class BfsStrategy implements PathingStrategy {
     /**

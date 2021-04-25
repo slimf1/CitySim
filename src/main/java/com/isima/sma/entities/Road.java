@@ -10,21 +10,46 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 /**
- * Morceau de route
+ * Route de la ville, itérable sur les
+ * véhicules se déplaçant dessus
  * @author Slimane F.
  */
 public class Road extends Entity implements Iterable<Vehicle>, Comparable<Road> {
 
+    /**
+     * Le coût maximal d'une route
+     */
     private static final int MAX_COST = 10;
+    /**
+     * L'état par défaut d'une route, statique car
+     * n'a pas d'état particulier
+     */
     public static final RoadState DEFAULT_STATE = new DefaultState();
 
     private static final long serialVersionUID = -2966220689110826407L;
 
-    private int usury;               // Usure de la route
-    private Queue<Vehicle> vehicles; // Les véhicules sur la route
-    private RoadState state;         // L'état de la route (pattern state)
-    private boolean busStop;         // Indique un arrêt de bus
+    /**
+     * Usure de la route
+     */
+    private int usury;
+    /**
+     * Les véhicules sur la route
+     */
+    private Queue<Vehicle> vehicles;
+    /**
+     * L'état de la route (pattern state)
+     */
+    private RoadState state;
+    /**
+     * Indique un arrêt de bus
+     */
+    private boolean busStop;
 
+    /**
+     * Constructeur d'une route
+     * @param x L'abscisse du point de la route
+     * @param y L'ordonnée du point de la route
+     */
     public Road(int x, int y) {
         super(x, y);
         this.usury = 0;

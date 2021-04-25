@@ -7,15 +7,31 @@ package com.isima.sma.time;
  */
 public class Clock {
 
+    /**
+     * Le nombre de ticks total dans une journée
+     */
     public static final int TICK_MAX = 360;
 
-    private int time; // Le nombre de ticks effectif
+    /**
+     * Le nombre de ticks effectif
+     */
+    private int time;
+
+    /**
+     * L'instance de l'horloge (pattern singleton)
+     */
     private static final Clock instance = new Clock();
 
+    /**
+     * Constructeur d'une horloge
+     */
     private Clock(){
         time = 0;
     }
 
+    /**
+     * @return L'instance de l'horloge (pattern singleton)
+     */
     public static Clock getInstance(){
         return instance;
     }

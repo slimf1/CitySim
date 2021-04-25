@@ -9,15 +9,27 @@ import java.io.Serializable;
  * Représente les travaux sur une route.
  * Permet de décrémenter l'usure d'une route ;
  * la durée de ces travaux dépend de l'usure.
+ * Augmente le coût de façon linéaire sur l'usure
+ * de la route.
+ * @author Slimane F.
  */
 public class RoadWorks implements RoadState, Serializable {
 
-    private static final int DEFAULT_DURATION = 10; // La durée par défaut
-    private static final int FACTOR = 2; // Le facteur pour le coût
+    /**
+     * La durée par défaut des travaux
+     */
+    private static final int DEFAULT_DURATION = 10;
+    /**
+     * Le facteur pour le calcul du coût
+     */
+    private static final int FACTOR = 2;
 
     private static final long serialVersionUID = 6583558997930872437L;
 
-    private int duration; // La durée actuelle des travaux
+    /**
+     * La durée restante des travaux
+     */
+    private int duration;
 
     /**
      * Constructeur de l'état travaux

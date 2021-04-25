@@ -12,8 +12,13 @@ public enum TimeOfDay {
     AFTERNOON(17, 22),
     DUSK(22, 25);
 
-
+    /**
+     * Borne inférieure de l'heure de la période
+     */
     private int lower;
+    /**
+     * Borne supérieure de l'heure de la période
+     */
     private int upper;
 
     TimeOfDay(int lower, int upper) {
@@ -21,10 +26,18 @@ public enum TimeOfDay {
         this.upper = upper;
     }
 
+    /**
+     * @return La borne inférieure de l'heure
+     * de la période
+     */
     public int getLower() {
         return lower;
     }
 
+    /**
+     * @return La borne supérieure de l'heure
+     * de la période
+     */
     public int getUpper() {
         return upper;
     }
