@@ -22,8 +22,14 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import javax.swing.*;
+import javax.swing.filechooser.FileSystemView;
+import java.awt.event.ActionEvent;
+import java.io.File;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -160,17 +166,32 @@ public class FxUserInterface extends Application {
 
         MenuBar menuBar = new MenuBar();
         Menu viewMenu = new Menu("File");
-        MenuItem zoneItem = new MenuItem("Sauvegarder");
-        zoneItem.setOnAction(e -> city.writeToFile("file"));
-        MenuItem vehiclesItem = new MenuItem("Charger");
-        vehiclesItem.setOnAction(e -> city.loadFromFile("file"));
+        MenuItem saveItem = new MenuItem("Sauvegarder");
+        FileChooser fileChooser = new FileChooser();
+        // Permet d'ouvrir le dossier "mes documents" (indépendant de l'OS)
+        fileChooser.setInitialDirectory(FileSystemView.getFileSystemView().getDefaultDirectory());
+        // Filtre pour ne considérer que les fichiers binaires
+        fileChooser.getExtensionFilters()
+                .add(new FileChooser.ExtensionFilter("Fichier binaire (*.bin)", "*.bin"));
+        saveItem.setOnAction(e -> {
+            fileChooser.setTitle("Sauvegarder...");
+            fileChooser.setInitialFileName("city.bin");
+            File file = fileChooser.showSaveDialog(primaryStage);
+            if (file != null)
+                city.writeToFile(file.getPath());
+        });
+        MenuItem loadItem = new MenuItem("Charger");
+        loadItem.setOnAction(e -> {
+            fileChooser.setTitle("Charger...");
+            File file = fileChooser.showOpenDialog(primaryStage);
+            if (file != null) {
+                city = City.loadFromFile(file.getPath());
+                drawCity(cityCanvas.getGraphicsContext2D());
+            }
+        });
 
-//        ToggleGroup toggleGroup = new ToggleGroup();
-//        toggleGroup.getToggles().add(zoneItem);
-//        toggleGroup.getToggles().add(vehiclesItem);
-
-        viewMenu.getItems().add(zoneItem);
-        viewMenu.getItems().add(vehiclesItem);
+        viewMenu.getItems().add(saveItem);
+        viewMenu.getItems().add(loadItem);
         menuBar.getMenus().add(viewMenu);
         HBox hbox = new HBox(menuBar);
         root.setTop(hbox);
