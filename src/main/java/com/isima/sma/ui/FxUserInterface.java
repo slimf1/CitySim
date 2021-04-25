@@ -169,7 +169,8 @@ public class FxUserInterface extends Application {
         fileChooser.setInitialDirectory(FileSystemView.getFileSystemView().getDefaultDirectory());
         // Filtre pour ne considérer que les fichiers binaires
         fileChooser.getExtensionFilters()
-                .add(new FileChooser.ExtensionFilter("Fichier binaire (*.bin)", "*.bin"));
+                .addAll(new FileChooser.ExtensionFilter("Fichier binaire (*.bin)", "*.bin"),
+                        new FileChooser.ExtensionFilter("Tous les fichiers", "*.*"));
         saveItem.setOnAction(e -> {
             fileChooser.setTitle("Sauvegarder...");
             fileChooser.setInitialFileName("city.bin");
