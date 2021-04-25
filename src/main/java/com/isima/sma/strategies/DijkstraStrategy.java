@@ -11,7 +11,7 @@ import java.util.*;
  * de Dijkstra
  * @author Slimane F.
  */
-public class DijkstraStrategy implements PathingStrategy {
+public class DijkstraStrategy implements PathingStrategy, java.io.Serializable {
     /**
      * {@inheritDoc}
      * Implémentation par l'algorithme de Dijkstra

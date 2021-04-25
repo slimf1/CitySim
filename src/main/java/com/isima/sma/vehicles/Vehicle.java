@@ -14,7 +14,7 @@ import java.util.Queue;
  * Classe véhicule.
  * @author Slimane F.
  */
-public class Vehicle {
+public class Vehicle implements java.io.Serializable {
 
     /**
      * La stratégie part défaut pour créer un nouveau

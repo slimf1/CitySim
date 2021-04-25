@@ -20,7 +20,7 @@ import java.util.Set;
  * parcours en largeur
  * @author Slimane F.
  */
-public class BfsStrategy implements PathingStrategy {
+public class BfsStrategy implements PathingStrategy, java.io.Serializable {
     /**
      * {@inheritDoc}
      * Implémentation par l'algorithme de parcours en largeur
