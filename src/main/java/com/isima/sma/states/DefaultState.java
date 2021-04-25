@@ -9,7 +9,7 @@ import java.io.Serializable;
 /**
  * L'état par défaut d'une route. Ne donne pas lieu
  * à d'effets particuliers.
- * @author Slimane F.
+ * @author Slimane F. et Barthélemy J.
  */
 public class DefaultState implements RoadState {
 
@@ -56,15 +56,12 @@ public class DefaultState implements RoadState {
     @Override
     public Color getColor(Road road) {
 
-        int [] costLevel = {0, 1, 3, 5, 8, 10, 15};
+        int[] costLevel = {0, 1, 3, 5, 8, 10, 15};
         int i = 0;
-        while(i < costLevel.length && road.cost() >= costLevel[i]){
+        while(i < costLevel.length && road.cost() >= costLevel[i]) {
             i++;
         }
-        if(i==1){
-            return Color.BLACK;
-        }
-        return Color.hsb(0, 1, 0.5+(i-1)/12.0);
-
+        return i == 1 ? Color.BLACK
+                      : Color.hsb(0, 1, 0.5 + (i - 1)/12.0);
     }
 }

@@ -1,7 +1,6 @@
 package com.isima.sma.entities;
 
 import com.isima.sma.states.CarAccident;
-import com.isima.sma.states.DefaultState;
 import com.isima.sma.vehicles.Vehicle;
 import org.junit.Test;
 
