@@ -47,7 +47,6 @@ public class FxUserInterface extends Application {
     private ZoneType selectedZoneType;
     private Timer autoPlayTimer;
     private Label hoverLabel;
-    private boolean removeOnClick;
     private VBox controlPanel;
     private Group clockGroup;
 
@@ -58,7 +57,6 @@ public class FxUserInterface extends Application {
         this.selectedZoneType = null;
         this.autoPlayTimer = null;
         this.hoverLabel = new Label();
-        this.removeOnClick = false;
         this.controlPanel = new VBox();
         hoverLabel.setPadding(new Insets(3, 0, 0, 0));
         root.setBottom(hoverLabel);
@@ -151,13 +149,6 @@ public class FxUserInterface extends Application {
         stepButtonsBox.getChildren().add(autoStepButton);
         controlPanel.getChildren().add(stepButtonsBox);
 
-        Button deleteButton = new Button("Remove");
-        deleteButton.setOnAction(e -> {
-            removeOnClick = !removeOnClick;
-            System.out.println("x = " + removeOnClick);
-        });
-        controlPanel.getChildren().add(deleteButton);
-
         controlPanel.setPadding(new Insets(10));
         root.setRight(controlPanel);
 
@@ -228,9 +219,7 @@ public class FxUserInterface extends Application {
         int row = (int)mouseEvent.getY() / SQUARE_LENGTH;
         boolean redraw = false;
 
-        if (removeOnClick && city.removeAt(column, row)) {
-            redraw = true;
-        } else if (selectedZoneType == null) {
+        if (selectedZoneType == null) {
             if (city.addRoad(column, row)) {
                 redraw = true;
             }
