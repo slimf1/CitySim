@@ -21,6 +21,9 @@ import java.util.Set;
  * @author Slimane F.
  */
 public class BfsStrategy implements PathingStrategy, java.io.Serializable {
+
+    private static final long serialVersionUID = -9101001738639473126L;
+
     /**
      * {@inheritDoc}
      * Implémentation par l'algorithme de parcours en largeur

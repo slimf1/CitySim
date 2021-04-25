@@ -22,6 +22,8 @@ public class Vehicle implements java.io.Serializable {
      */
     private static final PathingStrategy DEFAULT_PATHING_STRATEGY = new DijkstraStrategy();
 
+    private static final long serialVersionUID = -2467726853530824318L;
+
     /**
      * Chemin qu'emprunte le véhicule
      */

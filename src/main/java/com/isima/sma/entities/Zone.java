@@ -8,6 +8,8 @@ import javafx.scene.paint.Paint;
  */
 public class Zone extends Entity {
 
+    private static final long serialVersionUID = -7973835097515889928L;
+
     /**
      * Type de la zone
      */

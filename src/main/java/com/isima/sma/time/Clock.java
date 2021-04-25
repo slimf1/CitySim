@@ -14,11 +14,12 @@ public class Clock implements Serializable {
      */
     public static final int TICK_MAX = 360;
 
+    private static final long serialVersionUID = 2574525790696639327L;
+
     /**
      * Le nombre de ticks effectif
      */
     private int time;
-
 
     /**
      * Constructeur d'une horloge
@@ -31,7 +32,6 @@ public class Clock implements Serializable {
      * Conversion du nombre de ticks en une
      * chaîne représentant l'heure de la journée
      * en fonction du nombre de ticks maximum
-     * @author Slimane F.
      * @param ticks Le nombre de ticks
      * @return Une chaîne représentant l'heure courante
      * en fonction du nombre de ticks maximum

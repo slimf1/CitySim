@@ -11,8 +11,16 @@ import java.util.Objects;
  */
 public final class Pair<T1, T2> implements java.io.Serializable {
 
-    private final T1 first; // Le premier élément
-    private final T2 second; // Le second élément
+    private static final long serialVersionUID = -3937611160210459098L;
+
+    /**
+     * Le premier élément du couple
+     */
+    private final T1 first;
+    /**
+     * Le second élément du couple
+     */
+    private final T2 second;
 
     /**
      * Constructeur d'un couple

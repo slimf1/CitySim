@@ -1,8 +1,7 @@
-package com.isima.sma.utils;
+package com.isima.sma.time;
 
-import com.isima.sma.time.Clock;
-import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Test;
 
 public class ClockTest {
 

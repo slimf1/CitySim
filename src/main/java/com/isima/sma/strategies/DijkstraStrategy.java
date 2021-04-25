@@ -12,6 +12,9 @@ import java.util.*;
  * @author Slimane F.
  */
 public class DijkstraStrategy implements PathingStrategy, java.io.Serializable {
+
+    private static final long serialVersionUID = 1223215659417066635L;
+
     /**
      * {@inheritDoc}
      * Implémentation par l'algorithme de Dijkstra
